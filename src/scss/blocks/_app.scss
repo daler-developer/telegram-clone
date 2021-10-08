@@ -1,0 +1,6 @@
+.app {
+  & {
+    background-color: $color-light-grey;
+    min-height: 100vh;
+  }
+}

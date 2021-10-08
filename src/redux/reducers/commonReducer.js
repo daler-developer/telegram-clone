@@ -1,37 +1,39 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 
-export const loadUsers = createAsyncThunk('common/loadUsers', async (arg, thunkAPI) => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/users')
-  const users = await response.json()
-
-  // throw new Error('Daler')
-  return Promise.reject(new Error('Daler'))
-})
-
-const commonSlice = createSlice({
+const commonReducer = createSlice({
   name: 'common',
   initialState: {
-    isLoading: false,
-    users: []
+    searchChatInputValue: '',
+    searchMessageInputValue: ''
   },
   reducers: {
-
-  },
-  extraReducers: {
-    [loadUsers.pending](state, action) {
-      state.isLoading = true
+    // -----------
+    setSearchChatInputValue(state, { payload }) {
+      const { to } = payload
+      state.searchChatInputValue = to
     },
-    [loadUsers.fulfilled](state, action) {
-      state.users = action.payload
-      state.isLoading = false
+    // -----------
+    setSearchMessageInputValue(state, { payload }) {
+      const { to } = payload
+      state.searchMessageInputValue = to
     },
-    [loadUsers.rejected](state, action) {
-      console.log('_Error', action.error)
-    }
+    // ----------
   }
 })
 
-export const {} = commonSlice.actions
+const commonActions = commonReducer.actions
 
-export default commonSlice.reducer
+
+export { commonActions }
+
+
+export const selectSearchChatInputValue = (state) => {
+  return state.common.searchChatInputValue
+}
+
+export const selectSearchMessageInputValue = (state) => {
+  return state.common.searchMessageInputValue
+}
+
+export default commonReducer.reducer

@@ -1,0 +1,13 @@
+.home-page {
+  & {
+    padding-top: 40px;
+  }
+  &__body {
+    @include push--auto;
+    height: 80vh;
+    width: 80%;
+    background-color: $color-white;
+    display: flex;
+    box-shadow: 0 0 10px $color-black-05;
+  }
+}

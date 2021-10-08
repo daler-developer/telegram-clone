@@ -1,0 +1,28 @@
+.chat-message {
+  & {
+    background-color: $color-white;
+    display: inline-flex;
+    padding: 8px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &--green {
+      background-color: $color-light-green;
+    }
+  }
+  &__author {
+    position: absolute;
+    bottom: 100%;
+    left: 6px;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  &__photo {
+    border-radius: 10px;
+    margin-top: 7px;
+    max-width: 350px;
+    object-fit: fill;
+  }
+}

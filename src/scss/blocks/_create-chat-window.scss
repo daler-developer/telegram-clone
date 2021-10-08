@@ -1,0 +1,48 @@
+.create-chat-window {
+  & {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: z('modal');
+    padding: 20px;
+    border-radius: 10px;
+    background-color: $color-white;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+
+    &--hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+  &__title {
+    text-align: center;
+  }
+  &__form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__input {
+    border: 1px solid #000;
+    padding: 5px;
+  }
+  &__photos {
+    align-self: center;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+  }
+  &__photo {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.527);
+    display: block;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
