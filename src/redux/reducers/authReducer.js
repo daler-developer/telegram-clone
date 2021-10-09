@@ -10,9 +10,9 @@ const authSlice = createSlice({
   reducers: {
     // ------------
     login(state, { payload }) {
-      const { id, displayName, photoURL } = payload
+      const { uid, displayName, photoURL } = payload
       state.isAuthenticated = true
-      state.user = { id, displayName, photoURL }
+      state.user = { uid, displayName, photoURL }
     },
     // ------------
     logout(state, { payload }) {
@@ -23,9 +23,15 @@ const authSlice = createSlice({
   }
 })
 
-const authActions = authSlice.actions
 
+export const authActions = authSlice.actions
 
-export { authActions }
+export const selectIsAuthenticated = (state) => {
+  return state.auth.isAuthenticated
+}
+
+export const selectUser = (state) => {
+  return state.auth.user
+}
 
 export default authSlice.reducer

@@ -14,10 +14,28 @@
     flex-shrink: 0;
     background-color: $color-white-dark-1;
   }
+  &__header-left {
+    display: grid;
+    grid-template-areas:
+      'avatar display-name'
+      'avatar status';
+    column-gap: 10px;
+  }
   &__avatar {
     border-radius: 50%;
     width: 40px;
     height: 40px;
+    grid-area: avatar;
+  }
+  &__display-name {
+    grid-area: display-name;
+    font-weight: 600;
+  }
+  &__status {
+    font-size: 14px;
+    grid-area: status;
+    color: $color-green;
+    letter-spacing: .2px;
   }
   &__header-actions {
     display: flex;
@@ -73,6 +91,10 @@
     grid-column-gap: 10px;
     grid-row-gap: 5px;
     cursor: pointer;
+
+    &--selected {
+      background-color: $color-black-01;
+    }
 
     &-photo-url {
       grid-area: photo-url;

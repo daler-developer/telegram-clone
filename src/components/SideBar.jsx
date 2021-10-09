@@ -1,36 +1,62 @@
+import { signOut } from '@firebase/auth'
+import { collection, onSnapshot, query } from '@firebase/firestore'
+import { auth, db } from 'firebase'
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { selectUser } from 'redux/reducers/authReducer'
+import { chatsActions, selectChats, selectSelectedChatIndex } from 'redux/reducers/chatsReducer'
 import { commonActions, selectSearchChatInputValue } from 'redux/reducers/commonReducer'
 import { uiActions } from 'redux/reducers/uiReducer'
 
 
 const SideBar = (props) => {
 
-  const chats = [
-    {
-      name: 'Inha university',
-      lastMessage: 'Hello World',
-      photoURL: ''
-    },
-    {
-      name: 'West university',
-      lastMessage: 'You are bad',
-      photoURL: ''
-    },
-  ]
+  useEffect(() => {
+
+    const q = query(collection(db, '/chats'))
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const chats = []
+      snapshot.forEach((doc) => {
+        const data = doc.data()
+        const { name, photoURL, lastMessage } = data
+        chats.push({ id: doc.id, name, photoURL, lastMessage })
+      })
+      props.setChats({ chats })
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   const handleOpenCreateChatWindow = () => {
     props.toggleCreatChatWindowVisibility()
+  }
+  
+  const handleLogout = () => {
+    signOut(auth)
+  }
+
+  const handleSetSelectedChatIndex = (i) => {
+    props.setSelectedChatIndex({ to: i })
   }
 
   return (
     <div className={'side-bar'}>
       <div className={'side-bar__header'}>
-        <img
-          className={'side-bar__avatar'}
-          src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7MyAKB_IiXFjmaBfmcIsLSeampngsst29VQ&usqp=CAU'}
-        />
+        <div className={'side-bar__header-left'}>
+          <img
+            className={'side-bar__avatar'}
+            alt={'Wait'}
+            src={props.currentUser.photoURL}
+          />
+          <span className={'side-bar__display-name'}>
+            {props.currentUser.displayName}
+          </span>
+          <span className={'side-bar__status'}>
+            Online
+          </span>
+        </div>
         <ul className={'side-bar__header-actions'}>
-          <li className={'side-bar__header-action'}>
+          <li className={'side-bar__header-action'} onClick={handleLogout}>
             <i className={" side-bar__header-icon fas fa-sign-out-alt"}></i>
           </li>
         </ul>
@@ -48,9 +74,13 @@ const SideBar = (props) => {
         Add new Chat
       </button>
       <ul className={'side-bar__chats'}>
-        {chats.map((chat, i) => (
-          <li className={'side-bar__chat'} key={i}>
-            <img className={'side-bar__chat-photo-url'} />
+        {props.chats.map((chat, i) => (
+          <li
+            className={`side-bar__chat ${props.selectedChatIndex === i && 'side-bar__chat--selected'}`}
+            key={chat.id}
+            onClick={() => handleSetSelectedChatIndex(i)}
+          >
+            <img className={'side-bar__chat-photo-url'} src={chat.photoURL} />
             <span className={'side-bar__chat-name'}>
               {chat.name}
             </span>
@@ -65,12 +95,17 @@ const SideBar = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  searchChatInputValue: selectSearchChatInputValue(state)
+  searchChatInputValue: selectSearchChatInputValue(state),
+  currentUser: selectUser(state),
+  chats: selectChats(state),
+  selectedChatIndex: selectSelectedChatIndex(state)
 })
 
 const mapDispatchToProps = {
   toggleCreatChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility,
-  setSearchChatInputValue: commonActions.setSearchChatInputValue
+  setSearchChatInputValue: commonActions.setSearchChatInputValue,
+  setChats: chatsActions.setChats,
+  setSelectedChatIndex: chatsActions.setSelectedChatIndex
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar)
