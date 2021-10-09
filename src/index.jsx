@@ -7,7 +7,7 @@ import App from './components/App'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={'/whatsapp-clone'}>
       <Provider store={store}>
         <App />
       </Provider>

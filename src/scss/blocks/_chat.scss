@@ -49,9 +49,6 @@
     &-icon {
       font-size: 20px;
     }
-    &-search-icon {
-
-    }
     &-search-input {
       position: absolute;
       padding: 8px 5px;
@@ -122,6 +119,12 @@
       color: $color-grey;
       font-size: 20px;
       cursor: pointer;
+    }
+    &-photo-icon {
+      
+      &--active {
+        color: $color-blue;
+      }
     }
   }
 }
