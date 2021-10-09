@@ -8,25 +8,18 @@ const commonReducer = createSlice({
     searchMessageInputValue: ''
   },
   reducers: {
-    // -----------
     setSearchChatInputValue(state, { payload }) {
       const { to } = payload
       state.searchChatInputValue = to
     },
-    // -----------
     setSearchMessageInputValue(state, { payload }) {
       const { to } = payload
       state.searchMessageInputValue = to
     },
-    // ----------
   }
 })
 
-const commonActions = commonReducer.actions
-
-
-export { commonActions }
-
+export const commonActions = commonReducer.actions
 
 export const selectSearchChatInputValue = (state) => {
   return state.common.searchChatInputValue

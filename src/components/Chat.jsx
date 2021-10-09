@@ -1,6 +1,10 @@
+import { onSnapshot } from '@firebase/firestore'
+import { db } from 'firebase'
 import { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
+import { selectSelectedChatId } from 'redux/reducers/chatsReducer'
 import { commonActions, selectSearchChatInputValue, selectSearchMessageInputValue } from 'redux/reducers/commonReducer'
+import { messagesActions, selectMessages } from 'redux/reducers/messagesReducer'
 import ChatMessage from './ChatMessage'
 
 
@@ -16,28 +20,34 @@ const Chat = (props) => {
     footerInputRef.current.focus()
   }, [])
 
-  const messages = [
-    {
-      text: 'Hello World',
-      author: 'Saidov Daler',
-      dateCreated: new Date(),
-      alignment: 'left',
-      photoURL: 'https://picsum.photos/id/237/600/300'
-    },
-    {
-      text: 'Hello World',
-      author: 'Saidov Daler',
-      dateCreated: new Date(),
-      alignment: 'left',
-    },
-    {
-      text: 'Hello World',
-      author: 'Saidov Daler',
-      dateCreated: new Date(),
-      alignment: 'right',
-      photoURL: 'https://picsum.photos/id/211/200/300'
-    },
-  ]
+  useEffect(() => {
+    if (props.selectedChatIndex) {
+      // onSnapshot(db, `/messages/${props.selectedChatIndex}`)
+    }
+  }, [])
+
+  // const messages = [
+  //   {
+  //     text: 'Hello World',
+  //     author: 'Saidov Daler',
+  //     dateCreated: new Date(),
+  //     alignment: 'left',
+  //     photoURL: 'https://picsum.photos/id/237/600/300'
+  //   },
+  //   {
+  //     text: 'Hello World',
+  //     author: 'Saidov Daler',
+  //     dateCreated: new Date(),
+  //     alignment: 'left',
+  //   },
+  //   {
+  //     text: 'Hello World',
+  //     author: 'Saidov Daler',
+  //     dateCreated: new Date(),
+  //     alignment: 'right',
+  //     photoURL: 'https://picsum.photos/id/211/200/300'
+  //   },
+  // ]
 
   return (
     <div className={'chat'}>
@@ -68,7 +78,7 @@ const Chat = (props) => {
       {/* Body */}
       <div className={'chat__body'}>
         <ul className={'chat__messages-list'}>
-          {messages.map((m, i) => (
+          {[].map((m, i) => (
             <li className={`chat__messages-item ${m.alignment === 'left' ? 'chat__messages-item--left' : 'chat__messages-item--right'}`} key={i}>
               <ChatMessage
                 text={m.text}
@@ -95,11 +105,14 @@ const Chat = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  searchMessageInputValue: selectSearchMessageInputValue(state)
+  searchMessageInputValue: selectSearchMessageInputValue(state),
+  messages: selectMessages(state),
+  selectedChatIndex: selectSelectedChatId(state)
 })
 
 const mapDispatchToProps = {
-  setSearchMessageInputValue: commonActions.setSearchMessageInputValue
+  setSearchMessageInputValue: commonActions.setSearchMessageInputValue,
+  setMessages: messagesActions.setMessages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat)

@@ -4,19 +4,17 @@ import { createSlice } from '@reduxjs/toolkit'
 const chatsSlice = createSlice({
   name: 'chats',
   initialState: {
-    list: [
-      
-    ],
-    selectedChatIndex: null
+    list: [],
+    selectedChatId: null
   },
   reducers: {
     setChats(state, { payload }) {
       const { chats } = payload
       state.list = chats
     },
-    setSelectedChatIndex(state, { payload }) {
+    setSelectedChatId(state, { payload }) {
       const { to } = payload
-      state.selectedChatIndex = to
+      state.selectedChatId = to
     }
   }
 })
@@ -27,8 +25,8 @@ export const selectChats = (state) => {
   return state.chats.list
 }
 
-export const selectSelectedChatIndex = (state) => {
-  return state.chats.selectedChatIndex
+export const selectSelectedChatId = (state) => {
+  return state.chats.selectedChatId
 }
 
 export default chatsSlice.reducer

@@ -4,7 +4,7 @@ import { auth, db } from 'firebase'
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
-import { chatsActions, selectChats, selectSelectedChatIndex } from 'redux/reducers/chatsReducer'
+import { chatsActions, selectChats, selectSelectedChatId } from 'redux/reducers/chatsReducer'
 import { commonActions, selectSearchChatInputValue } from 'redux/reducers/commonReducer'
 import { uiActions } from 'redux/reducers/uiReducer'
 
@@ -35,8 +35,8 @@ const SideBar = (props) => {
     signOut(auth)
   }
 
-  const handleSetSelectedChatIndex = (i) => {
-    props.setSelectedChatIndex({ to: i })
+  const handleSetSelectedChatId = (id) => {
+    props.setSelectedChatId({ to: id })
   }
 
   return (
@@ -76,9 +76,9 @@ const SideBar = (props) => {
       <ul className={'side-bar__chats'}>
         {props.chats.map((chat, i) => (
           <li
-            className={`side-bar__chat ${props.selectedChatIndex === i && 'side-bar__chat--selected'}`}
+            className={`side-bar__chat ${props.selectedChatIndex === chat.id && 'side-bar__chat--selected'}`}
             key={chat.id}
-            onClick={() => handleSetSelectedChatIndex(i)}
+            onClick={() => handleSetSelectedChatId(chat.id)}
           >
             <img className={'side-bar__chat-photo-url'} src={chat.photoURL} />
             <span className={'side-bar__chat-name'}>
@@ -98,14 +98,14 @@ const mapStateToProps = (state) => ({
   searchChatInputValue: selectSearchChatInputValue(state),
   currentUser: selectUser(state),
   chats: selectChats(state),
-  selectedChatIndex: selectSelectedChatIndex(state)
+  selectedChatIndex: selectSelectedChatId(state)
 })
 
 const mapDispatchToProps = {
   toggleCreatChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility,
   setSearchChatInputValue: commonActions.setSearchChatInputValue,
   setChats: chatsActions.setChats,
-  setSelectedChatIndex: chatsActions.setSelectedChatIndex
+  setSelectedChatId: chatsActions.setSelectedChatId
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar)
