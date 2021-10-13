@@ -1,0 +1,14 @@
+.intro {
+  & {
+    @include center;
+    flex-direction: column;
+    width: 75%;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+  }
+  &__logo {
+    width: 120px;
+  }
+  &__title {
+    margin-top: 20px;
+  }
+}

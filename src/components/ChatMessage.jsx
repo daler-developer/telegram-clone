@@ -1,7 +1,12 @@
 import pt from 'prop-types'
+import { connect } from 'react-redux'
+import { selectSearchMessageInputValue } from 'redux/reducers/commonReducer'
 
 
 const ChatMessage = (props) => {
+
+  const date = new Date(props.created * 1000).toUTCString()
+
   return (
     <div className={`chat-message ${props.isGreen && 'chat-message--green'}`}>
       <span className={'chat-message__author'}>
@@ -13,9 +18,9 @@ const ChatMessage = (props) => {
       {props.photo && (
         <img src={props.photo} className={'chat-message__photo'} />
       )}
-      {/* <span className={'chat-message__date-created'}>
-        {props.dateCreated.toString()}
-      </span> */}
+      <span className={'chat-message__date-created'}>
+        {date}
+      </span>
     </div>
   )
 }
@@ -28,4 +33,10 @@ ChatMessage.propTypes = {
   isGreen: pt.bool.isRequired,
 }
 
-export default ChatMessage
+const mapStateToProps = (state) => ({
+  searchMessageInputValue: selectSearchMessageInputValue(state)
+})
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatMessage)

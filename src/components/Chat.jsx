@@ -1,25 +1,59 @@
-import { addDoc, collection, onSnapshot, query, Timestamp } from '@firebase/firestore'
+import { addDoc, arrayRemove, arrayUnion, collection, doc, onSnapshot, orderBy, query, serverTimestamp, Timestamp, updateDoc } from '@firebase/firestore'
 import { db } from 'firebase'
+import usePrevious from 'hooks/usePrevius'
 import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
-import { selectSelectedChatId } from 'redux/reducers/chatsReducer'
+import { selectChatById, selectSelectedChatId } from 'redux/reducers/chatsReducer'
 import { commonActions, selectSearchChatInputValue, selectSearchMessageInputValue } from 'redux/reducers/commonReducer'
-import { messagesActions, selectFilteredMessages, selectMessages } from 'redux/reducers/messagesReducer'
+import { messagesActions, selectFilteredMessages, selectIsMessagesLoading, selectMessages } from 'redux/reducers/messagesReducer'
 import ChatMessage from './ChatMessage'
 
 
 const Chat = (props) => {
+  const prevSelectedChatId = usePrevious(props.selectedChatId)
+
   const searchInputRef = useRef(null)
   const footerInputRef = useRef(null)
   const fileInputRef = useRef(null)
+  const photoPreviewRef = useRef(null)
 
   const [messageTextValue, setMessageTextValue] = useState('')
   const [fileSelected, setFileSelected] = useState(false)
+  const [fileData, setFileData] = useState(null)
 
   const handleSearchSearchBtnClick = () => {
     searchInputRef.current.focus()
   }
+
+  useEffect(() => {
+    if (fileData) {
+
+      setTimeout(() => {
+        photoPreviewRef.current?.classList.add('chat__photo-preview--hidden')
+      }, 1000)
+
+      // photoPreviewRef.current?.addEventListener('mouseover', (e) => {
+      //   photoPreviewRef.current.classList.remove('chat__photo-preview--hidden')
+      // })
+  
+      // photoPreviewRef.current?.addEventListener('mouseout', (e) => {
+      //   photoPreviewRef.current.classList.add('chat__photo-preview--hidden')
+      // })
+
+    } else {
+
+    }
+
+  }, [fileData])
+
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      updateDoc(doc(db, '/chats', props.selectedChatId), {
+        usersOnline: arrayRemove(props.currentUser.displayName)
+      })
+    }
+  }, [])
 
   useEffect(() => {
     footerInputRef.current.focus()
@@ -27,7 +61,8 @@ const Chat = (props) => {
 
   useEffect(() => {
     if (props.selectedChatId) {
-      const q = query(collection(db, `/chats/${props.selectedChatId}/messages`))
+      props.setMessagesLoading({ to: true })
+      const q = query(collection(db, `/chats/${props.selectedChatId}/messages`), orderBy('created'))
       onSnapshot(q, (snapshot) => {
         const messages = []
         snapshot.forEach((doc) => {
@@ -36,42 +71,57 @@ const Chat = (props) => {
           messages.push({ authorUID, authorName, created: created?.seconds, photo, text })
         })
         props.setMessages({ messages })
+        props.setMessagesLoading({ to: false })
       })
     }
   }, [props.selectedChatId])
 
-  const handleSendMessage = async (e) => {
-    if (e.key === 'Enter') {
-      const photo = fileInputRef.current.files[0]
-      let photoData = null
-      
-      if (fileSelected) {
-        const reader = new FileReader()
-  
-        reader.readAsDataURL(photo)
-  
-        reader.onload = () => {
-          photoData = reader.result
-  
-          addDoc(collection(db, `/chats/${props.selectedChatId}/messages`), {
-            text: messageTextValue,
-            authorName: props.currentUser.displayName,
-            authorUID: props.currentUser.uid,
-            created: Timestamp.fromDate(new Date()),
-            photo: photoData
-          })
-        }
-      } else {
-        addDoc(collection(db, `/chats/${props.selectedChatId}/messages`), {
-          text: messageTextValue,
-          authorName: props.currentUser.displayName,
-          authorUID: props.currentUser.uid,
-          created: Timestamp.fromDate(new Date()),
-          photo: photoData
+  useEffect(() => {
+    if (props.selectedChatId) {
+      const chatEntering = doc(db, '/chats', props.selectedChatId)
+      const chatLeaving = prevSelectedChatId ? doc(db, '/chats', prevSelectedChatId) : null
+
+      if (chatLeaving) {
+        updateDoc(chatLeaving, {
+          usersOnline: arrayRemove(props.currentUser.displayName)
         })
       }
 
-      setMessageTextValue('')
+      updateDoc(chatEntering, {
+        usersOnline: arrayUnion(props.currentUser.displayName)
+      })
+    }
+
+    return () => {
+      updateDoc(doc(db, '/chats', props.selectedChatId), {
+        usersOnline: arrayRemove(props.currentUser.displayName)
+      })
+    }
+  }, [props.selectedChatId])
+
+  const resetForm = () => {
+    setMessageTextValue('')
+    setFileData(null)
+    fileInputRef.current.value = null
+  }
+
+  const handleSendMessage = async (e) => {
+    if (e.key === 'Enter') {
+      await addDoc(collection(db, `/chats/${props.selectedChatId}/messages`), {
+        text: messageTextValue,
+        authorName: props.currentUser.displayName,
+        authorUID: props.currentUser.uid,
+        created: serverTimestamp(),
+        photo: fileData
+      })
+
+      const currentFirebaseChat = doc(db, 'chats', props.selectedChat.id)
+
+      await updateDoc(currentFirebaseChat, {
+        lastMessage: messageTextValue
+      })
+
+      resetForm()
     }
   }
 
@@ -81,9 +131,17 @@ const Chat = (props) => {
 
   const handleFileInputChange = (e) => {
     if (e.target.files !== 0) {
+      const reader = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+
+      reader.onload = () => {
+        setFileData(reader.result)
+      }
+
       setFileSelected(true)
     } else {
       setFileSelected(false)
+      setFileData(null)
     }
   }
 
@@ -91,13 +149,16 @@ const Chat = (props) => {
     <div className={'chat'}>
       {/* Header */}
       <div className={'chat__header'}>
-        <img className={'chat__header-img'} />
+        <img className={'chat__header-img'} src={props.selectedChat?.photoURL} />
         <div className={'chat__header-body'}>
           <span className={'chat__name'}>
-            Westminster university
+            {props.selectedChat.name}
           </span>
           <span className={'chat__date'}>
-            Last seen on Tuesday
+            Online: {props.selectedChat.usersOnline.map((el, i) => {
+              const isLast = props.selectedChat.usersOnline.length === i + 1
+              return `${el}${!isLast ? ',' : ''} `
+            })}
           </span>
         </div>
         <div className={'chat__header-btns'}>
@@ -115,8 +176,11 @@ const Chat = (props) => {
       </div>
       {/* Body */}
       <div className={'chat__body'}>
+        {props.isMessagesLoading && (
+          <div className={'chat__loader'}></div>
+        )}
         <ul className={'chat__messages-list'}>
-          {props.filteredMessages.map((m, i) => (
+          {props.messages.map((m, i) => (
             <li className={`chat__messages-item ${m.authorUID  === props.currentUser.uid ? 'chat__messages-item--right' : 'chat__messages-item--left'}`} key={i}>
               <ChatMessage
                 text={m.text}
@@ -131,8 +195,13 @@ const Chat = (props) => {
       </div>
       {/* Footer */}
       <div className={'chat__footer'}>
+        <img
+          className={'chat__photo-preview'}
+          src={fileData}
+          ref={photoPreviewRef}
+        />
         <i
-          className={`chat__footer-icon chat__footer-photo-icon ${fileSelected && 'chat__footer-photo-icon--active'} far fa-image`}
+          className={`chat__footer-icon chat__footer-photo-icon ${fileData && 'chat__footer-photo-icon--active'} far fa-image`}
           onClick={handleOpenFileWindow}
         ></i>
         <input
@@ -145,8 +214,8 @@ const Chat = (props) => {
         />
         <input
           type={'file'}
-          hidden
           ref={fileInputRef}
+          hidden
           onChange={handleFileInputChange}
         />
       </div>
@@ -159,12 +228,15 @@ const mapStateToProps = (state) => ({
   messages: selectMessages(state),
   selectedChatId: selectSelectedChatId(state),
   currentUser: selectUser(state),
-  filteredMessages: selectFilteredMessages(state)
+  filteredMessages: selectFilteredMessages(state),
+  selectedChat: selectChatById(state, selectSelectedChatId(state)),
+  isMessagesLoading: selectIsMessagesLoading(state)
 })
 
 const mapDispatchToProps = {
   setSearchMessageInputValue: commonActions.setSearchMessageInputValue,
-  setMessages: messagesActions.setMessages
+  setMessages: messagesActions.setMessages,
+  setMessagesLoading: messagesActions.setIsLoading
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat)

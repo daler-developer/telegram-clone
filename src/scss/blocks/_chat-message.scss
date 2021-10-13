@@ -2,7 +2,7 @@
   & {
     background-color: $color-white;
     display: inline-flex;
-    padding: 8px;
+    padding: 8px 8px 4px;
     border-radius: 10px;
     position: relative;
     display: flex;
@@ -25,5 +25,10 @@
     margin-top: 7px;
     max-width: 350px;
     object-fit: fill;
+  }
+  &__date-created {
+    margin-top: 10px;
+    color: $color-grey;
+    font-size: 13px;
   }
 }

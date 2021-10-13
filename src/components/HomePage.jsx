@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import { selectIsAuthenticated } from 'redux/reducers/authReducer'
+import { selectSelectedChatId } from 'redux/reducers/chatsReducer'
 import Chat from './Chat'
+import Intro from './Intro'
 import SideBar from './SideBar'
 
 
@@ -13,14 +15,15 @@ const HomePage = (props) => {
     <div className={'home-page'}>
       <div className={'home-page__body'}>
         <SideBar />
-        <Chat />
+        {props.selectedChatId ? <Chat /> : <Intro />}
       </div>
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: selectIsAuthenticated(state)
+  isAuthenticated: selectIsAuthenticated(state),
+  selectedChatId: selectSelectedChatId(state)
 })
 
 const mapDispatchToProps = {}

@@ -4,12 +4,16 @@ import { createSlice } from "@reduxjs/toolkit"
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: {
-    list: []
+    list: [],
+    isLoading: false
   },
   reducers: {
     setMessages(state, { payload }) {
       const { messages } = payload
       state.list = messages
+    },
+    setIsLoading(state, { payload }) {
+      state.isLoading = payload.to
     }
   }
 })
@@ -30,6 +34,10 @@ export const selectFilteredMessages = (state) => {
     }
     return 0
   })
+}
+
+export const selectIsMessagesLoading = (state) => {
+  return state.messages.isLoading
 }
 
 export default messagesSlice.reducer
