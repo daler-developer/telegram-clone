@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 import { selectCreateChatWindowVisibility, uiActions } from 'redux/reducers/uiReducer'
 import Shade from './Shade'
 
-import avatar01 from 'assets/avatars/01.jpg'
-import avatar02 from 'assets/avatars/02.png'
-import avatar03 from 'assets/avatars/03.png'
-import avatar04 from 'assets/avatars/04.jpg'
+import avatar01 from 'assets/avatars/01.svg'
+import avatar02 from 'assets/avatars/02.svg'
+import avatar03 from 'assets/avatars/03.svg'
+import avatar04 from 'assets/avatars/04.svg'
 
 
 const CreateChatWindow = (props) => {
@@ -40,7 +40,7 @@ const CreateChatWindow = (props) => {
 
   return <>
     <div className={`create-chat-window ${!props.visibility && 'create-chat-window--hidden'}`}>
-      <h2 className={'create-chat-window__title h5'}>
+      <h2 className={'create-chat-window__title h3'}>
         Create Chat
       </h2>
       <form className={'create-chat-window__form'} onSubmit={handleCreateChat}>

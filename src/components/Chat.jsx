@@ -17,6 +17,7 @@ const Chat = (props) => {
   const footerInputRef = useRef(null)
   const fileInputRef = useRef(null)
   const photoPreviewRef = useRef(null)
+  const sendMessageBtnRef = useRef(null)
 
   const [messageTextValue, setMessageTextValue] = useState('')
   const [fileSelected, setFileSelected] = useState(false)
@@ -145,6 +146,18 @@ const Chat = (props) => {
     }
   }
 
+  useEffect(() => {
+    if (messageTextValue.trim()) {
+      sendMessageBtnRef.current.classList.remove('chat__footer-send-btn--hidden')
+    } else {
+      sendMessageBtnRef.current.classList.add('chat__footer-send-btn--hidden')
+    }
+  }, [messageTextValue])
+
+  const handleFooterInputChange = (e) => {
+    setMessageTextValue(e.target.value)
+  }
+
   return (
     <div className={'chat'}>
       {/* Header */}
@@ -204,14 +217,19 @@ const Chat = (props) => {
           className={`chat__footer-icon chat__footer-photo-icon ${fileData && 'chat__footer-photo-icon--active'} far fa-image`}
           onClick={handleOpenFileWindow}
         ></i>
-        <input
-          placeholder={'Type something...'}
-          className={'chat__footer-input'}
-          ref={footerInputRef}
-          value={messageTextValue}
-          onChange={(e) => setMessageTextValue(e.target.value)}
-          onKeyDown={handleSendMessage}
-        />
+        <div className={'chat__footer-input-wrapper'}>
+          <input
+            placeholder={'Type something...'}
+            className={'chat__footer-input'}
+            ref={footerInputRef}
+            value={messageTextValue}
+            onChange={handleFooterInputChange}
+            onKeyDown={handleSendMessage}
+          />
+          <button className={'chat__footer-send-btn chat__footer-send-btn--hidden'} ref={sendMessageBtnRef}>
+            Send
+          </button>
+        </div>
         <input
           type={'file'}
           ref={fileInputRef}

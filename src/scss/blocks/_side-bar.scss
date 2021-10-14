@@ -20,22 +20,25 @@
       'avatar display-name'
       'avatar status';
     column-gap: 10px;
+    align-items: center;
   }
   &__avatar {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     grid-area: avatar;
   }
   &__display-name {
     grid-area: display-name;
     font-weight: 600;
+    font-size: 24px;
   }
   &__status {
-    font-size: 14px;
+    font-size: 16px;
     grid-area: status;
     color: $color-green;
     letter-spacing: .2px;
+    font-weight: 600;
   }
   &__header-actions {
     display: flex;
@@ -50,13 +53,21 @@
     color: $color-grey;
     cursor: pointer;
   }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
   &__search-panel {
     margin: 0 0 10px;
-    padding: 10px 15px;
+    padding: 15px 15px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
     background-color: $color-white;
+    border-radius: 30px;
   }
   &__search-input {
     text-indent: 10px;
@@ -67,20 +78,27 @@
     color: $color-grey;
   }
   &__add-chat-btn {
-    padding: 7px 15px;
-    font-size: 18px;
+    padding: 10px 0;
+    font-size: 17px;
     font-weight: 600;
     flex-shrink: 0;
     background-color: $color-white;
     color: $color-blue;
     border: 1px solid $color-blue;
+    border-radius: 30px;
+    transition: all .3s linear;
+
+    &:hover {
+      background-color: $color-blue;
+      color: $color-white;
+    }
   }
   &__chats {
     margin-top: 5px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    background-color: $color-white;
+    flex-grow: 1;
   }
   &__chat {
     padding: 10px 15px;
@@ -90,9 +108,13 @@
       'photo-url last-message';
     justify-content: start;
     grid-column-gap: 10px;
-    grid-row-gap: 5px;
     cursor: pointer;
     border-top: 1px solid $color-light-grey;
+    background-color: $color-white;
+    
+    & > * {
+      // border: 1px solid #000 !important;
+    }
 
     &:last-child {
       border-bottom: 1px solid $color-light-grey;
@@ -110,13 +132,18 @@
       border: 2px solid $color-black;
     }
     &-name {
-      font-weight: 500;
-      font-size: 18px;
+      font-weight: 600;
+      line-height: 100%;
+      font-size: 27px;
+      display: flex;
+      align-items: flex-end;
     }
     &-last-message {
       grid-area: last-message;
       font-size: 14px;
       color: $color-grey;
+      display: flex;
+      align-items: flex-start;
     }
   }
   &__loader {

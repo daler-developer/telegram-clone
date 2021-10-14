@@ -61,38 +61,40 @@ const SideBar = (props) => {
           </li>
         </ul>
       </div>
-      <div className={'side-bar__search-panel'}>
-        <i className={"side-bar__search-icon fas fa-search"}></i>
-        <input
-          className={'side-bar__search-input'}
-          placeholder={'Search Chat'}
-          value={props.searchChatInputValue}
-          onChange={(e) => props.setSearchChatInputValue({ to: e.target.value })}
-        />
+      <div className={'side-bar__body'}>
+        <div className={'side-bar__search-panel'}>
+          <i className={"side-bar__search-icon fas fa-search"}></i>
+          <input
+            className={'side-bar__search-input'}
+            placeholder={'Search Chat'}
+            value={props.searchChatInputValue}
+            onChange={(e) => props.setSearchChatInputValue({ to: e.target.value })}
+          />
+        </div>
+        <button className={'side-bar__add-chat-btn'} onClick={handleOpenCreateChatWindow}>
+          Add New Chat
+        </button>
+        {props.isLoading && <span className={'side-bar__loader'}></span> }
+        <ul className={'side-bar__chats'}>
+          {!props.isLoading && (
+            props.filteredChatsByNameIncludes.map((chat, i) => (
+              <li
+                className={`side-bar__chat ${props.selectedChatIndex === chat.id && 'side-bar__chat--selected'}`}
+                key={chat.id}
+                onClick={() => handleSetSelectedChatId(chat.id)}
+              >
+                <img className={'side-bar__chat-photo-url'} src={chat.photoURL} />
+                <span className={'side-bar__chat-name'}>
+                  {chat.name}
+                </span>
+                <span className={'side-bar__chat-last-message'}>
+                  {chat.lastMessage ? chat.lastMessage : 'Tap to open'}
+                </span>
+              </li>
+            ))
+          )}
+        </ul>
       </div>
-      <button className={'side-bar__add-chat-btn'} onClick={handleOpenCreateChatWindow}>
-        Add New Chat
-      </button>
-      {props.isLoading && <span className={'side-bar__loader'}></span> }
-      <ul className={'side-bar__chats'}>
-        {!props.isLoading && (
-          props.filteredChatsByNameIncludes.map((chat, i) => (
-            <li
-              className={`side-bar__chat ${props.selectedChatIndex === chat.id && 'side-bar__chat--selected'}`}
-              key={chat.id}
-              onClick={() => handleSetSelectedChatId(chat.id)}
-            >
-              <img className={'side-bar__chat-photo-url'} src={chat.photoURL} />
-              <span className={'side-bar__chat-name'}>
-                {chat.name}
-              </span>
-              <span className={'side-bar__chat-last-message'}>
-                {chat.lastMessage ? chat.lastMessage : 'Tap to open'}
-              </span>
-            </li>
-          ))
-        )}
-      </ul>
     </div>
   )
 }
