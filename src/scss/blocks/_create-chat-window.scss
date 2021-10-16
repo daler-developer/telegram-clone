@@ -3,73 +3,17 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
     z-index: z('modal');
     padding: 20px;
     border-radius: 10px;
     background-color: $color-white;
     display: flex;
     flex-direction: column;
-
-    transition: .2s all ease-in;
+    transition: all .2s ease-in;
 
     &--hidden {
-      visibility: hidden;
-      opacity: 0;
-    }
-  }
-  &__title {
-    text-align: center;
-  }
-  &__form {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  &__input {
-    border: 1px solid $color-black;
-    padding: 10px 10px;
-    border-radius: 5px;
-    font-size: 18px;
-  }
-  &__avatars {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto auto;
-    gap: 10px;
-  }
-  &__avatar-item {
-    display: block;
-  }
-  &__avatar {
-    border: 2px solid $color-black;
-    display: block;
-    overflow: hidden;
-    width: 100%;
-    height: 80px;
-    cursor: pointer;
-    border-radius: 50%;
-
-    &--selected {
-      border-color: $color-green;
-    }
-  }
-  &__submit-btn {
-    margin-top: 30px;
-    padding: 10px 0;
-    font-size: 17px;
-    font-weight: 600;
-    flex-shrink: 0;
-    background-color: $color-white;
-    color: $color-blue;
-    border: 1px solid $color-blue;
-    border-radius: 30px;
-    transition: all .3s linear;
-
-    &:hover {
-      background-color: $color-blue;
-      color: $color-white;
+      transform: translate(-50%, -50%) scale(0);
     }
   }
 }

@@ -1,0 +1,40 @@
+.chats-item {
+  & {
+    padding: 5px;
+    display: grid;
+    justify-content: start;
+    align-items: center;
+    column-gap: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    grid-template-areas:
+      'photo name'
+      'photo last-message';
+
+    &:hover {
+      background-color: $color-black-01;
+    }
+    &--selected {
+      background-color: $color-blue !important;
+      color: $color-white;
+    }
+  }
+  &__photo {
+    grid-area: photo;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: grey;
+  }
+  &__name {
+    grid-area: name;
+    font-weight: 600;
+    font-size: 22px;
+  }
+  &__last-message {
+    grid-area: last-message;
+  }
+  &__last-message-author {
+    font-weight: 500;
+  }
+}

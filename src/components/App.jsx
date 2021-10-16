@@ -13,18 +13,18 @@ import { authActions } from 'redux/reducers/authReducer'
 const App = (props) => {
   const history = useHistory()
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { uid, photoURL, displayName } = user
-        props.login({ uid, photoURL, displayName })
-        history.push('/home')
-      } else {
-        props.logout()
-        history.push('/login')
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       const { uid, photoURL, displayName } = user
+  //       props.login({ uid, photoURL, displayName })
+  //       history.push('/home')
+  //     } else {
+  //       props.logout()
+  //       history.push('/login')
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className={'app'}>

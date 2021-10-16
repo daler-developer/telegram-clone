@@ -4,9 +4,13 @@ import { createSlice } from '@reduxjs/toolkit'
 const chatsSlice = createSlice({
   name: 'chats',
   initialState: {
-    list: [],
-    selectedChatId: null,
-    isLoading: true
+    list: [
+      { name: 'West', lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/big-ears-neutral/:seed.svg', id: 'id001' },
+      { name: 'West', lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/female/:seed.svg', id: 'id002' },
+      { name: 'West', lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/jdenticon/:seed.svg', id: 'id003' },
+    ],
+    selectedChatId: 'id003',
+    isLoading: false
   },
   reducers: {
     setChats(state, { payload }) {

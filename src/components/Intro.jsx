@@ -1,13 +1,9 @@
-import logo from 'assets/logo.svg'
-
-
 const Intro = () => {
-
   return (
     <div className={'intro'}>
-      <img src={logo} className={'intro__logo'} />
+      <img src="https://web.telegram.org/z/favicon.svg" className={'intro__logo'} />
       <h1 className={'intro__title h4'}>
-        Welcome to Whatsapp Clone
+        Welcome to Telegram clone
       </h1>
     </div>
   )

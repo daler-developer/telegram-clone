@@ -1,21 +1,16 @@
 import { connect } from 'react-redux'
 import { selectIsAuthenticated } from 'redux/reducers/authReducer'
 import { selectSelectedChatId } from 'redux/reducers/chatsReducer'
-import Chat from './Chat'
 import Intro from './Intro'
-import SideBar from './SideBar'
+import Sidebar from './Sidebar'
 
 
 const HomePage = (props) => {
-  if (!props.isAuthenticated) {
-    return <h1>Error</h1>
-  }
-
   return (
     <div className={'home-page'}>
       <div className={'home-page__body'}>
-        <SideBar />
-        {props.selectedChatId ? <Chat /> : <Intro />}
+        <Sidebar />
+        <Intro />
       </div>
     </div>
   )

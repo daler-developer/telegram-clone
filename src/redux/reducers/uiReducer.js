@@ -7,18 +7,13 @@ const uiReducer = createSlice({
     createChatWindowVisibility: false
   },
   reducers: {
-    // -----------
     toggleCreateChatWindowVisibility(state, { payload }) {
       state.createChatWindowVisibility = !state.createChatWindowVisibility
-    },
-    // -----------
+    }
   }
 })
 
-const uiActions  = uiReducer.actions
-
-
-export { uiActions }
+export const uiActions  = uiReducer.actions
 
 export const selectCreateChatWindowVisibility = (state) => {
   return state.ui.createChatWindowVisibility
