@@ -1,12 +1,52 @@
+import { useState } from "react"
 import { connect } from "react-redux"
 import { selectCreateChatWindowVisibility, uiActions } from "redux/reducers/uiReducer"
 import Shade from "./Shade"
 
+import photo01 from 'assets/avatars/01.svg'
+import photo02 from 'assets/avatars/02.svg'
+import photo03 from 'assets/avatars/03.svg'
+import photo04 from 'assets/avatars/04.svg'
+
 
 const CreateChatWindow = (props) => {
+  const [chatNameInputValue, setChatNameInputValue] = useState('')
+  const [selectedPhotoURL, setSelectedPhotoURL] = useState(photo01)
+  const [emptyChatNameError, setEmptyChatNameError] = useState(false)
+
+  const photos = [photo01, photo02, photo03, photo04]
+
+  const createChat = () => {
+
+  }
+
+  const resetWindow = () => {
+    setChatNameInputValue('')
+    setSelectedPhotoURL(photo01)
+    setEmptyChatNameError(false)
+  }
+
+  const closeWindow = () => {
+    props.toggleCreateChatWindowVisibility()
+  }
 
   const handleShadeClick = () => {
-    props.toggleCreateChatWindowVisibility()
+    resetWindow()
+    closeWindow()
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (!chatNameInputValue.trim()) {
+      setEmptyChatNameError(true)
+    } else {
+      createChat()
+    }
+  }
+
+  const handlePhotoItemClick = (e, to) => {
+    setSelectedPhotoURL(to)
   }
 
   return <>
@@ -14,6 +54,27 @@ const CreateChatWindow = (props) => {
       <h2 className={'create-chat-window__title h3'}>
         Create Chat
       </h2>
+      <form className="create-chat-window__form" onSubmit={handleSubmit}>
+        <input
+          className={`create-chat-window__chat-name-input ${emptyChatNameError && 'create-chat-window__chat-name-input--error'}`}
+          value={chatNameInputValue}
+          onChange={(e) => setChatNameInputValue(e.target.value)}
+          placeholder="Type chat name"
+        />
+        <ul className="create-chat-window__photos-list">
+          {
+            photos.map((photo) => (
+              <li className={`create-chat-window__photos-item`} onClick={(e) => handlePhotoItemClick(e, photo)}>
+                <img src={photo}  className={`create-chat-window__photo ${selectedPhotoURL === photo && 'create-chat-window__photo--selected'}`} />
+              </li>
+            ))
+          }
+
+        </ul>
+        <button type="submit" className="create-chat-window__submit-btn">
+          Create
+        </button>
+      </form>
     </div>
     <Shade visibility={props.visibility} onClick={handleShadeClick} />
   </>

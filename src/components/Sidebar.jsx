@@ -34,7 +34,9 @@ const Sidebar = (props) => {
       {/* Search */}
       <div className="sidebar__search-panel-wrapper">
         <div className="sidebar__search-panel" ref={searchPanelRef}>
-          <i className="sidebar__search-icon fas fa-search"></i>
+          <span className="sidebar__search-icon material-icons-outlined">
+            search
+          </span>
           <input
             className="sidebar__search-input"
             placeholder="Search chat"

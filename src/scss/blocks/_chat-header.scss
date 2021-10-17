@@ -1,0 +1,67 @@
+.chat-header {
+  & {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+  &__left {
+    display: grid;
+    align-items: center;
+    column-gap: 10px;
+    grid-template-areas:
+      'photo name'
+      'photo online-list';
+  }
+  &__photo {
+    grid-area: photo;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid $color-black;
+  }
+  &__chat-name {
+    grid-area: name;
+    font-weight: 600;
+    font-size: 22px;
+  }
+  &__online-panel {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+  }
+  &__online-list {
+    grid-area: online-list;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+  }
+  &__online-item {
+
+  }
+  &__right {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+  &__btn {
+    @include center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $color-black-01;
+    }
+  }
+  &__icon {
+    font-size: 30px;
+    color: $color-grey;
+  }
+}

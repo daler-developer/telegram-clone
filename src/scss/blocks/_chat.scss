@@ -1,0 +1,15 @@
+.chat {
+  & {
+    position: relative;
+    width: 75%;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+    padding: 70px 0 50px;
+    display: flex;
+    flex-direction: column;
+  }
+  &__body {
+    padding: 20px;
+    flex-grow: 1;
+    overflow: auto;
+  }
+}
