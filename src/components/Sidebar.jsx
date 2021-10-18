@@ -1,15 +1,38 @@
-import { useRef, useState } from 'react'
+import { signOut } from '@firebase/auth'
+import { collection, onSnapshot, query } from '@firebase/firestore'
+import { auth, db } from 'firebase'
+import { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
-import { selectChats, selectSelectedChatId } from 'redux/reducers/chatsReducer'
+import { chatsActions, selectChatsByNameIncludes, selectIsChatsLoading, selectSelectedChatId } from 'redux/reducers/chatsReducer'
+import { commonActions, selectSearchChatInputValue } from 'redux/reducers/commonReducer'
 import { uiActions } from 'redux/reducers/uiReducer'
 import ChatsItem from './ChatsItem'
 
 
 const Sidebar = (props) => {
-  const [searchInputValue, setSearchInputValue] = useState('')
-
   const searchPanelRef = useRef(null)
+
+  useEffect(() => {
+    props.setIsLoading({ to: true })
+  }, [])
+
+  useEffect(() => {
+    const q = query(collection(db, 'chats'))
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const chats = []
+      snapshot.forEach((doc) => {
+        const { id } = doc
+        const { name, lastMessage, onlineList, photoURL } = doc.data()
+        chats.push({ id, name, lastMessage, onlineList, photoURL })
+      })
+      props.setChats({ list: chats })
+      props.setIsLoading({ to: false })
+    })
+    
+    return () => unsubscribe()
+  }, [])
 
   const handleSearchInputFocus = (e) => {
     searchPanelRef.current.classList.add('sidebar__search-panel--active')
@@ -18,18 +41,29 @@ const Sidebar = (props) => {
   const handleAddChatBtnClick = () => {
     props.toggleCreateChatWindowVisibility()
   }
+  
+  const handleLogoutBtnClick = () => {
+    signOut(auth)
+  }
 
   return (
     <div className="sidebar">
       {/* Header */}
       <div className="sidebar__header">
-        <img className="sidebar__header-avatar" src={props.user.photoURL} />
-        <span className="sidebar__header-display-name">
-          {props.user.displayName}
-        </span>
-        <span className="sidebar__header-status">
-          Online
-        </span>
+        <div className="sidebar__header-left">
+          <img className="sidebar__header-avatar" src={props.user.photoURL} />
+          <span className="sidebar__header-display-name">
+            {props.user.displayName}
+          </span>
+          <span className="sidebar__header-status">
+            Online
+          </span>
+        </div>
+        <button className="sidebar__logout-btn" onClick={handleLogoutBtnClick}>
+          <span className="sidebar__logout-icon material-icons-outlined">
+            logout
+          </span>
+        </button>
       </div>
       {/* Search */}
       <div className="sidebar__search-panel-wrapper">
@@ -40,16 +74,17 @@ const Sidebar = (props) => {
           <input
             className="sidebar__search-input"
             placeholder="Search chat"
-            value={searchInputValue}
-            onChange={(e) => setSearchInputValue(e.target.value)}
+            value={props.searchChatInputValue}
+            onChange={(e) => props.setSearchChatInputValue({ to: e.target.value })}
             onFocus={handleSearchInputFocus}
           />
         </div>
       </div>
       {/* Chats */}
+      {props.isLoading && <div className="sidebar__loader" />}
       <ul className="sidebar__chats-list">
         {
-          props.chats.map((chat) => (
+          props.filteredChats.map((chat) => (
             <ChatsItem
               key={chat.id}
               id={chat.id}
@@ -71,12 +106,17 @@ const Sidebar = (props) => {
 
 const mapStateToProps = (state) => ({
   user: selectUser(state),
-  chats: selectChats(state),
-  selectedChatId: selectSelectedChatId(state)
+  selectedChatId: selectSelectedChatId(state),
+  isLoading: selectIsChatsLoading(state),
+  filteredChats: selectChatsByNameIncludes(state, selectSearchChatInputValue(state)),
+  searchChatInputValue: selectSearchChatInputValue(state)
 })
 
 const mapDispatchToProps = {
-  toggleCreateChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility
+  toggleCreateChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility,
+  setIsLoading: chatsActions.setIsLoading,
+  setSearchChatInputValue: commonActions.setSearchChatInputValue,
+  setChats: chatsActions.setChats
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

@@ -5,17 +5,17 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState: {
     list: [
-      { name: 'West', onlineList: ['Daler', 'Aziz'], lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/big-ears-neutral/:seed.svg', id: 'id001' },
-      { name: 'Inha', onlineList: ['Daler', 'Aziz'], lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/female/:seed.svg', id: 'id002' },
-      { name: 'GecUz', onlineList: ['Daler', 'Aziz'], lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/jdenticon/:seed.svg', id: 'id003' },
+      // { name: 'West', onlineList: ['Daler', 'Aziz'], lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/big-ears-neutral/:seed.svg', id: 'id001' },
+      // { name: 'Inha', onlineList: ['Daler', 'Aziz'], lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/female/:seed.svg', id: 'id002' },
+      // { name: 'GecUz', onlineList: ['Daler', 'Aziz'], lastMessage: { text: 'Hello World', authorDisplayName: 'Saidov Daler' }, photoURL: 'https://avatars.dicebear.com/api/jdenticon/:seed.svg', id: 'id003' },
     ],
     selectedChatId: null,
     isLoading: false
   },
   reducers: {
     setChats(state, { payload }) {
-      const { chats } = payload
-      state.list = chats
+      const { list } = payload
+      state.list = list
     },
     setSelectedChatId(state, { payload }) {
       const { to } = payload

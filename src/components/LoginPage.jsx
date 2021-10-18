@@ -5,6 +5,7 @@ import { auth, googleProvider } from 'firebase'
 
 
 const LoginPage = (props) => {
+  if (props.isAuthenticated) return null
 
   const handleLogin = () => {
     signInWithPopup(auth, googleProvider)

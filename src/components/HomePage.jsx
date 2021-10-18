@@ -7,6 +7,8 @@ import Sidebar from './Sidebar'
 
 
 const HomePage = (props) => {
+  if (!props.isAuthenticated) return null
+
   return (
     <div className={'home-page'}>
       <div className={'home-page__body'}>

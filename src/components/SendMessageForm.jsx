@@ -8,7 +8,7 @@ const SendMessageForm = (props) => {
   const [messageInputValue, setMessageInputValue] = useState('')
   const [submitBtnHidden, setSubmitBtnHidden] = useState(true)
   const [fileData, setFileData] = useState(null)
-  const [isPhotoPreviewHidden, setIsPhotoPreviewHidden] = useState(false)
+  const [isPhotoPreviewHidden, setIsPhotoPreviewHidden] = useState(true)
 
   const fileInputRef = useRef(null)
   const messageInputRef = useRef(null)
@@ -23,8 +23,16 @@ const SendMessageForm = (props) => {
     }
   }, [messageInputValue])
 
+  useEffect(() => {
+    if (fileData) {
+      showPhotoPreview()
+    } else {
+      hidePhotoPreview()
+    }
+  }, [fileData])
+
   const sendMessage = () => {
-    resetForm()
+    
   }
 
   const deletePhoto = () => {
@@ -36,6 +44,14 @@ const SendMessageForm = (props) => {
     setFileData(null)
     setMessageInputValue('')
     fileInputRef.current.value = null
+  }
+
+  const hidePhotoPreview = () => {
+    setIsPhotoPreviewHidden(true)
+  }
+
+  const showPhotoPreview = () => {
+    setIsPhotoPreviewHidden(false)
   }
 
   const triggerNativeFileInputClick = () => {
@@ -53,6 +69,7 @@ const SendMessageForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     sendMessage()
+    resetForm()
   }
 
   const handleSelectPhotoBtnClick = () => {
@@ -63,13 +80,13 @@ const SendMessageForm = (props) => {
     readFileData(e.target)
   }
 
-  const handleDeletePhoto = () => {
+  const handleDeletePhotoBtnClick = () => {
     deletePhoto()
   }
 
   return <>
     <form className="send-message-form" onSubmit={handleSubmit}>
-      <PhotoPreview photoURL={fileData} isHidden={isPhotoPreviewHidden} onDeletePhoto={handleDeletePhoto} />
+      <PhotoPreview photoURL={fileData} isHidden={isPhotoPreviewHidden} onDeletePhotoBtnClick={handleDeletePhotoBtnClick} />
 
       <button className="send-message-form__select-photo-btn" type="button" onClick={handleSelectPhotoBtnClick}>
         <span className={`send-message-form__photo-icon material-icons-outlined ${fileData && 'send-message-form__photo-icon--file--selected'}`}>

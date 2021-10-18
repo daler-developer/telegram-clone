@@ -4,12 +4,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    isAuthenticated: true,
-    user: {
-      photoURL: 'https://avatars.dicebear.com/api/avataaars/:seed.svg',
-      displayName: 'Saidov Daler',
-      uid: 'uid111'
-    }
+    isAuthenticated: false,
+    user: null
   },
   reducers: {
     login(state, { payload }) {

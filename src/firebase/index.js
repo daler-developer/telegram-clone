@@ -4,14 +4,12 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB57QksFy_Us8nvAkx_WF6tuyEhBulLrzs",
-  authDomain: "testproject1-41e96.firebaseapp.com",
-  databaseURL: "https://testproject1-41e96-default-rtdb.firebaseio.com",
-  projectId: "testproject1-41e96",
-  storageBucket: "testproject1-41e96.appspot.com",
-  messagingSenderId: "287040450745",
-  appId: "1:287040450745:web:ed576786cc2a4c2965ab68",
-  measurementId: "G-H99KHTVL4P"
+  apiKey: "AIzaSyDgxSLLfr3A5sLBaWXb1sGuLcW6D__Ht4g",
+  authDomain: "whatsappclone-6dfe6.firebaseapp.com",
+  projectId: "whatsappclone-6dfe6",
+  storageBucket: "whatsappclone-6dfe6.appspot.com",
+  messagingSenderId: "504293413239",
+  appId: "1:504293413239:web:80c0a613af0cdfe6401172"
 }
 
 const app = initializeApp(firebaseConfig)

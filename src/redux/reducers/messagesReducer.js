@@ -4,7 +4,32 @@ import { createSlice } from "@reduxjs/toolkit"
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: {
-    list: [],
+    list: [
+      {
+        id: 'id001',
+        text: 'Hello World',
+        photoURL: null,
+        author: {
+          displayName: 'Saidov Daler',
+          uid: 'testid'
+        },
+        createdDate: {
+          seconds: 12234434
+        }
+      },
+      {
+        id: 'id002',
+        text: 'Aziz',
+        photoURL: null,
+        author: {
+          displayName: 'Saidov Daler',
+          uid: 'uidrandom'
+        },
+        createdDate: {
+          seconds: 12234434
+        }
+      },
+    ],
     isLoading: false
   },
   reducers: {

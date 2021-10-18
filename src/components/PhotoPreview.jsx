@@ -6,7 +6,7 @@ const PhotoPreview = (props) => {
   return (
     <div className={`photo-preview ${props.isHidden && 'photo-preview--hidden'}`}>
       <img src={props.photoURL} className="photo-preview__photo" />
-      <button className="photo-preview__remove-photo-btn" onClick={props.onDeletePhoto}>
+      <button className="photo-preview__remove-photo-btn" onClick={props.onDeletePhotoBtnClick}>
         Remove
       </button>
     </div>
@@ -18,9 +18,9 @@ const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
 PhotoPreview.propTypes = {
-  photoURL: pt.string.isRequired,
+  photoURL: pt.string,
   isHidden: pt.bool.isRequired,
-  onDeletePhoto: pt.func.isRequired
+  onDeletePhotoBtnClick: pt.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoPreview)

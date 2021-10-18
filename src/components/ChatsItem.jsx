@@ -19,12 +19,14 @@ const ChatsItem = (props) => {
         {props.name}
       </span>
       <span className="chats-item__last-message">
-        <span className="chats-item__last-message-author">
-          {props.lastMessage.authorDisplayName}: {' '}
-        </span>
-        <span className="chats-item__last-message-text">
-          {props.lastMessage.text}
-        </span>
+        {props.lastMessage ? <>
+          <span className="chats-item__last-message-author">
+            {props.lastMessage.authorDisplayName}: {' '}
+          </span>
+          <span className="chats-item__last-message-text">
+            {props.lastMessage.text}
+          </span>
+        </> : 'Tap to open'}
       </span>
     </li>
   )

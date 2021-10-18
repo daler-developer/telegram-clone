@@ -1,0 +1,40 @@
+.messages-item {
+  & {
+    display: flex;
+
+    &--align-left {
+      justify-content: start;
+    }
+    &--align-right {
+      justify-content: end;
+    }
+  }
+  &__message {
+    position: relative;
+    background-color: $color-white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 10px 10px 4px;
+
+    &--green {
+      background-color: $color-light-green;
+    }
+  }
+  &__message-photo {
+    max-width: 300px;
+    background-color: $color-light-grey;
+  }
+  &__message-created-date {
+    margin-top: 10px;
+    color: $color-grey;
+    font-size: 13px;
+  }
+  &__message-author {
+    position: absolute;
+    bottom: 100%;
+    left: 5px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+}

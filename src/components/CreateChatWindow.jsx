@@ -7,6 +7,8 @@ import photo01 from 'assets/avatars/01.svg'
 import photo02 from 'assets/avatars/02.svg'
 import photo03 from 'assets/avatars/03.svg'
 import photo04 from 'assets/avatars/04.svg'
+import { addDoc, collection } from "@firebase/firestore"
+import { db } from "firebase"
 
 
 const CreateChatWindow = (props) => {
@@ -16,8 +18,15 @@ const CreateChatWindow = (props) => {
 
   const photos = [photo01, photo02, photo03, photo04]
 
-  const createChat = () => {
+  const createChat = async () => {
+    const chat = {
+      name: chatNameInputValue,
+      photoURL: selectedPhotoURL,
+      onlineList: [],
+      lastMessage: null
+    }
 
+    await addDoc(collection(db, 'chats'), chat)
   }
 
   const resetWindow = () => {
@@ -42,6 +51,8 @@ const CreateChatWindow = (props) => {
       setEmptyChatNameError(true)
     } else {
       createChat()
+      resetWindow()
+      closeWindow()
     }
   }
 
@@ -63,13 +74,12 @@ const CreateChatWindow = (props) => {
         />
         <ul className="create-chat-window__photos-list">
           {
-            photos.map((photo) => (
-              <li className={`create-chat-window__photos-item`} onClick={(e) => handlePhotoItemClick(e, photo)}>
+            photos.map((photo, i) => (
+              <li className={`create-chat-window__photos-item`} onClick={(e) => handlePhotoItemClick(e, photo)} key={i}>
                 <img src={photo}  className={`create-chat-window__photo ${selectedPhotoURL === photo && 'create-chat-window__photo--selected'}`} />
               </li>
             ))
           }
-
         </ul>
         <button type="submit" className="create-chat-window__submit-btn">
           Create
