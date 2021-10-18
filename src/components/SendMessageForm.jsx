@@ -1,5 +1,7 @@
+import { addDoc, serverTimestamp } from '@firebase/firestore'
 import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
+import { selectUser } from 'redux/reducers/authReducer'
 import { selectSelectedChatId } from 'redux/reducers/chatsReducer'
 import PhotoPreview from './PhotoPreview'
 
@@ -31,8 +33,17 @@ const SendMessageForm = (props) => {
     }
   }, [fileData])
 
-  const sendMessage = () => {
-    
+  const sendMessage = async () => {
+    const message = {
+      text: messageInputRef,
+      photoURL: fileData,
+      author: {
+        displayName: props.user.displayName,
+        uid: props.user.uid
+      },
+      createdDate: serverTimestamp()
+    }
+    await addDoc()
   }
 
   const deletePhoto = () => {
@@ -114,6 +125,8 @@ const SendMessageForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
+  selectedChatId: selectSelectedChatId(state),
+  user: selectUser(state),
   selectedChatId: selectSelectedChatId(state)
 })
 
