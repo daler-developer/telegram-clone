@@ -2,6 +2,7 @@ import pt from 'prop-types'
 
 
 const MessagesItem = (props) => {
+
   return (
     <li className={`messages-item ${props.alignment === 'left' ? 'messages-item--align-left' : 'messages-item--align-right'}`}>
       <div className={`messages-item__message ${props.isGreen && 'messages-item__message--green'}`}>

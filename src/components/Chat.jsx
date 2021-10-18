@@ -14,16 +14,26 @@ const Chat = (props) => {
 
   useEffect(() => {
     const q = query(collection(db, `chats/${props.selectedChatId}/messages`))
-    onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const messages = []
       snapshot.forEach((doc) => {
-        const { id } = doc
-        const { author, createdDate, text, photoURL } = doc.data()
-        const { seconds, nanoseconds} = createdDate
-        messages.push({ id, author, createdDate: { seconds, nanoseconds }, text, photoURL })
+        const data = doc.data()
+        // const message = {
+        //   id: doc.id,
+        //   text: data.text,
+        //   photoURL: data.photoURL,
+        //   createdDate: { seconds: data.createdDate.seconds },
+        //   author: {
+        //     displayName: data.author.displayName,
+        //     uid: data.author.uid
+        //   }
+        // }
+        // messages.push(message)
       })
-      props.setMessages({ list: messages })
+      // props.setMessages({ list: messages })
     })
+
+    return () => unsubscribe()
   }, [props.selectedChatId])
 
   return (
