@@ -4,38 +4,13 @@ import { createSlice } from "@reduxjs/toolkit"
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: {
-    list: [
-      {
-        id: 'id001',
-        text: 'Hello World',
-        photoURL: null,
-        author: {
-          displayName: 'Saidov Daler',
-          uid: 'testid'
-        },
-        createdDate: {
-          seconds: 12234434
-        }
-      },
-      {
-        id: 'id002',
-        text: 'Aziz',
-        photoURL: null,
-        author: {
-          displayName: 'Saidov Daler',
-          uid: 'uidrandom'
-        },
-        createdDate: {
-          seconds: 12234434
-        }
-      },
-    ],
+    list: [],
     isLoading: false
   },
   reducers: {
     setMessages(state, { payload }) {
-      const { messages } = payload
-      state.list = messages
+      const { list } = payload
+      state.list = list
     },
     setIsLoading(state, { payload }) {
       state.isLoading = payload.to

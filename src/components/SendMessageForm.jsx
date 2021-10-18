@@ -1,4 +1,5 @@
-import { addDoc, serverTimestamp } from '@firebase/firestore'
+import { addDoc, collection, serverTimestamp } from '@firebase/firestore'
+import { db } from 'firebase'
 import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
@@ -35,7 +36,7 @@ const SendMessageForm = (props) => {
 
   const sendMessage = async () => {
     const message = {
-      text: messageInputRef,
+      text: messageInputValue,
       photoURL: fileData,
       author: {
         displayName: props.user.displayName,
@@ -43,7 +44,7 @@ const SendMessageForm = (props) => {
       },
       createdDate: serverTimestamp()
     }
-    await addDoc()
+    await addDoc(collection(db, `chats/${props.selectedChatId}/messages`), message)
   }
 
   const deletePhoto = () => {
@@ -113,7 +114,7 @@ const SendMessageForm = (props) => {
           placeholder="Type message"
           ref={messageInputRef}
         />
-        <button  type="submit" className={`send-message-form__submit-btn ${submitBtnHidden && 'send-message-form__submit-btn--hidden'}`}>
+        <button type="submit" className={`send-message-form__submit-btn ${submitBtnHidden && 'send-message-form__submit-btn--hidden'}`}>
           Send
         </button>
       </div>

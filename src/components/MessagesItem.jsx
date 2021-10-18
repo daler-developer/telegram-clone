@@ -6,7 +6,7 @@ const MessagesItem = (props) => {
     <li className={`messages-item ${props.alignment === 'left' ? 'messages-item--align-left' : 'messages-item--align-right'}`}>
       <div className={`messages-item__message ${props.isGreen && 'messages-item__message--green'}`}>
         <span className="messages-item__message-author">
-          {props.authorDisplayName}
+          {props.author.displayName}
         </span>
         <p className="messages-item__message-text">
           {props.text}
@@ -25,10 +25,10 @@ const MessagesItem = (props) => {
 MessagesItem.propTypes = {
   text: pt.string.isRequired,
   photoURL: pt.string,
-  alignment: pt.oneOf(['left', 'right']).isRequired,
-  isGreen: pt.bool.isRequired,
   createdDate: pt.object.isRequired,
-  authorDisplayName: pt.string.isRequired
+  author: pt.object.isRequired,
+  isGreen: pt.bool.isRequired,
+  alignment: pt.oneOf(['left', 'right']).isRequired,
 }
 
 export default MessagesItem

@@ -6,7 +6,7 @@ const PhotoPreview = (props) => {
   return (
     <div className={`photo-preview ${props.isHidden && 'photo-preview--hidden'}`}>
       <img src={props.photoURL} className="photo-preview__photo" />
-      <button className="photo-preview__remove-photo-btn" onClick={props.onDeletePhotoBtnClick}>
+      <button className="photo-preview__remove-photo-btn" onClick={props.onDeletePhotoBtnClick} type="button">
         Remove
       </button>
     </div>
