@@ -76,7 +76,8 @@ const CreateChatWindow = (props) => {
           {
             photos.map((photo, i) => (
               <li className={`create-chat-window__photos-item`} onClick={(e) => handlePhotoItemClick(e, photo)} key={i}>
-                <img src={photo}  className={`create-chat-window__photo ${selectedPhotoURL === photo && 'create-chat-window__photo--selected'}`} />
+                <img src={photo}  className={`create-chat-window__photo ${selectedPhotoURL === photo && '_create-chat-window__photo--selected'}`} />
+                <div className={`create-chat-window__selected-label ${!(selectedPhotoURL === photo) && 'create-chat-window__selected-label--hidden'}`}></div>
               </li>
             ))
           }

@@ -1,13 +1,14 @@
 import { signOut } from '@firebase/auth'
 import { collection, onSnapshot, query } from '@firebase/firestore'
 import { auth, db } from 'firebase'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
 import { chatsActions, selectChatsByNameIncludes, selectIsChatsLoading, selectSelectedChatId } from 'redux/reducers/chatsReducer'
 import { commonActions, selectSearchChatInputValue } from 'redux/reducers/commonReducer'
-import { uiActions } from 'redux/reducers/uiReducer'
+import { selectSidebarVisibility, uiActions } from 'redux/reducers/uiReducer'
 import ChatsItem from './ChatsItem'
+import Shade from './Shade'
 
 
 const Sidebar = (props) => {
@@ -46,8 +47,12 @@ const Sidebar = (props) => {
     signOut(auth)
   }
 
-  return (
-    <div className="sidebar">
+  const handleShadeClick = () => {
+    props.toggleVisibility()
+  }
+
+  return <>
+    <div className={`sidebar ${!props.visibility && 'sidebar--hidden'}`}>
       {/* Header */}
       <div className="sidebar__header">
         <div className="sidebar__header-left">
@@ -71,13 +76,13 @@ const Sidebar = (props) => {
           <span className="sidebar__search-icon material-icons-outlined">
             search
           </span>
-          <input
+          {/* <input
             className="sidebar__search-input"
             placeholder="Search chat"
             value={props.searchChatInputValue}
             onChange={(e) => props.setSearchChatInputValue({ to: e.target.value })}
             onFocus={handleSearchInputFocus}
-          />
+          /> */}
         </div>
       </div>
       {/* Chats */}
@@ -101,7 +106,9 @@ const Sidebar = (props) => {
         Add new chat
       </button>
     </div>
-  )
+
+    <Shade visibility={props.visibility} onClick={handleShadeClick} />
+  </>
 }
 
 const mapStateToProps = (state) => ({
@@ -109,14 +116,16 @@ const mapStateToProps = (state) => ({
   selectedChatId: selectSelectedChatId(state),
   isLoading: selectIsChatsLoading(state),
   filteredChats: selectChatsByNameIncludes(state, selectSearchChatInputValue(state)),
-  searchChatInputValue: selectSearchChatInputValue(state)
+  searchChatInputValue: selectSearchChatInputValue(state),
+  visibility: selectSidebarVisibility(state)
 })
 
 const mapDispatchToProps = {
   toggleCreateChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility,
   setIsLoading: chatsActions.setIsLoading,
   setSearchChatInputValue: commonActions.setSearchChatInputValue,
-  setChats: chatsActions.setChats
+  setChats: chatsActions.setChats,
+  toggleVisibility: uiActions.toggleSidebarVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

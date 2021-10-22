@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp } from '@firebase/firestore'
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from '@firebase/firestore'
 import { db } from 'firebase'
 import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -42,9 +42,19 @@ const SendMessageForm = (props) => {
         displayName: props.user.displayName,
         uid: props.user.uid
       },
-      createdDate: serverTimestamp()
+      createdDate: serverTimestamp(),
+      timestamp: new Date().getTime()
     }
     await addDoc(collection(db, `chats/${props.selectedChatId}/messages`), message)
+  }
+
+  const updateLastMessage = async () => {
+    await updateDoc(doc(db, `/chats/${props.selectedChatId}`), {
+      lastMessage: {
+        authorDisplayName: props.user.displayName,
+        text: messageInputValue
+      }
+    })
   }
 
   const deletePhoto = () => {
@@ -81,6 +91,7 @@ const SendMessageForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     sendMessage()
+    updateLastMessage()
     resetForm()
   }
 
@@ -115,7 +126,9 @@ const SendMessageForm = (props) => {
           ref={messageInputRef}
         />
         <button type="submit" className={`send-message-form__submit-btn ${submitBtnHidden && 'send-message-form__submit-btn--hidden'}`}>
-          Send
+          <span className="send-message-form__send-icon material-icons">
+            send
+          </span>
         </button>
       </div>
 
@@ -127,8 +140,7 @@ const SendMessageForm = (props) => {
 
 const mapStateToProps = (state) => ({
   selectedChatId: selectSelectedChatId(state),
-  user: selectUser(state),
-  selectedChatId: selectSelectedChatId(state)
+  user: selectUser(state)
 })
 
 const mapDispatchToProps = {

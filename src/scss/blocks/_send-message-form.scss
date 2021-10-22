@@ -11,14 +11,16 @@
     align-items: center;
   }
   &__message-input-panel {
+    margin-left: 10px;
     height: 30px;
-    padding: 0 15px;
+    padding: 0 0 0 15px;
     background-image: $color-light-grey;
     flex-grow: 1;
     background-color: $color-white-dark;
     display: flex;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 25px;
+    overflow: hidden;
   }
   &__message-input {
     flex-grow: 1;
@@ -26,17 +28,21 @@
     font-size: 15px;
   }
   &__submit-btn {
+    @include center;
     margin-left: 10px;
-    height: 25px;
-    padding: 0 5px;
-    border-radius: 10px;
+    height: 100%;
+    border-radius: 5px;
     color: $color-white;
     background-color: $color-blue;
     transition: transform .2s linear;
+    padding: 0 15px;
 
     &--hidden {
       transform: scale(0);
     }
+  }
+  &__send-icon {
+    font-size: 16px;
   }
   &__select-photo-btn {
     @include center;
