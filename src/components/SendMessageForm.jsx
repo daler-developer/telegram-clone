@@ -16,7 +16,7 @@ const SendMessageForm = (props) => {
   const fileInputRef = useRef(null)
   const messageInputRef = useRef(null)
 
-  useEffect(() => messageInputRef.current.focus(), [props.selectedChatId])
+  // useEffect(() => messageInputRef.current.focus(), [props.selectedChatId])
 
   useEffect(() => {
     if (messageInputValue.trim()) {

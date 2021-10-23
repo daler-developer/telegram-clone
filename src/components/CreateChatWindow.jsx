@@ -23,7 +23,7 @@ const CreateChatWindow = (props) => {
 
   useEffect(() => {
     if (props.visibility) {
-      focusInput()
+      // focusInput()
     }
   }, [props.visibility])
 

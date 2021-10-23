@@ -1,12 +1,14 @@
 import pt from 'prop-types'
 import { connect } from 'react-redux'
 import { chatsActions } from 'redux/reducers/chatsReducer'
+import { uiActions } from 'redux/reducers/uiReducer'
 
 
 const ChatsItem = (props) => {
 
   const handleChatItemClick = () => {
     props.setSelectedChatId({ to: props.id })
+    props.setSidebarVisibility({ to: false })
   }
 
   return (
@@ -44,11 +46,12 @@ ChatsItem.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  
+
 })
 
 const mapDispatchToProps = {
-  setSelectedChatId: chatsActions.setSelectedChatId
+  setSelectedChatId: chatsActions.setSelectedChatId,
+  setSidebarVisibility: uiActions.setSidebarVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatsItem)
