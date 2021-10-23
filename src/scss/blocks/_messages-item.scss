@@ -1,7 +1,7 @@
 .messages-item {
   & {
     display: flex;
-    column-gap: 10px;
+    column-gap: 5px;
     animation: float .3s ease-in forwards;
     position: relative;
     align-items: start;
@@ -49,7 +49,7 @@
   }
   &__message-author {
     position: absolute;
-    bottom: 100%;
+    bottom: calc(100% + 2px);
     left: 5px;
     font-weight: 600;
     font-size: 13px;
@@ -64,5 +64,16 @@
   to {
     bottom: 0;
     opacity: 1;
+  }
+}
+
+@include mq('tablet-wide') {
+  .messages-item {
+    & {
+
+    }
+    &__message {
+      padding: 5px 5px 2px;
+    }
   }
 }

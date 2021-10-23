@@ -9,6 +9,7 @@ import photo03 from 'assets/avatars/03.svg'
 import photo04 from 'assets/avatars/04.svg'
 import { addDoc, collection } from "@firebase/firestore"
 import { db } from "firebase"
+import { chatsActions } from "redux/reducers/chatsReducer"
 
 
 const CreateChatWindow = (props) => {
@@ -34,7 +35,11 @@ const CreateChatWindow = (props) => {
       lastMessage: null
     }
 
-    await addDoc(collection(db, 'chats'), chat)
+    return await addDoc(collection(db, 'chats'), chat)
+  }
+
+  const changeSelectedChatId = (to) => {
+    props.setSelectedChatId({ to })
   }
 
   const focusInput = () => {
@@ -62,7 +67,7 @@ const CreateChatWindow = (props) => {
     if (!chatNameInputValue.trim()) {
       setEmptyChatNameError(true)
     } else {
-      createChat()
+      createChat().then((result) => changeSelectedChatId(result.id))
       resetWindow()
       closeWindow()
     }
@@ -109,7 +114,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  toggleCreateChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility
+  toggleCreateChatWindowVisibility: uiActions.toggleCreateChatWindowVisibility,
+  setSelectedChatId: chatsActions.setSelectedChatId
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateChatWindow)

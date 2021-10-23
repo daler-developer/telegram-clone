@@ -19,6 +19,18 @@
       'photo name'
       'photo online-list';
   }
+  &__burger-menu-btn {
+    display: none;
+    grid-area: burger-menu-btn;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $color-black-005;
+    }
+  }
+
   &__photo {
     grid-area: photo;
     width: 50px;
@@ -98,6 +110,16 @@
     & {
       height: 50px;
       padding: 0 5px;
+    }
+    &__left {
+      grid-template-areas:
+        'burger-menu-btn photo name'
+        'burger-menu-btn photo online-list';
+      column-gap: 4px;
+    }
+    &__burger-menu-btn {
+      display: block;
+      @include center;
     }
     &__photo {
       width: 40px;

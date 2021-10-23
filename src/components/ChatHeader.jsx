@@ -23,6 +23,10 @@ const ChatHeader = (props) => {
     await deleteDoc(doc(db, '/chats' , props.selectedChat.id))
   }
 
+  const openSidebar = () => {
+    props.setSidebarVisibility({ to: true })
+  }
+
   useEffect(() => {
     if (props.searchMessagePanelVisibility) {
       searchMessageInputRef.current?.focus()
@@ -36,6 +40,10 @@ const ChatHeader = (props) => {
 
   const handleDeleteChatBtnClick = () => {
     deleteCurrentChat()
+  }
+
+  const handleBugerMenuBtnClick = () => {
+    openSidebar()
   }
 
   return (
@@ -54,6 +62,11 @@ const ChatHeader = (props) => {
 
       {/* Left */}
       <div className="chat-header__left">
+        <button className="chat-header__burger-menu-btn" onClick={handleBugerMenuBtnClick}>
+          <span className="chat-header__icon chat-header__burger-icon material-icons">
+            menu
+          </span>
+        </button>
         <img src={props.selectedChat.photoURL} className="chat-header__photo" />
         <span className="chat-header__chat-name">
           {props.selectedChat.name}
@@ -63,7 +76,7 @@ const ChatHeader = (props) => {
           <ul className="chat-header__online-list">
             {
               props.selectedChat.onlineList.map((online, i) => (
-                <li className="chat-header__online-item">
+                <li className="chat-header__online-item" key={i}>
                   {online}{!isLastOnlineItem(i) ? ',' : null}
                 </li>
               ))
@@ -97,7 +110,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   setSearchMessageInputValue: commonActions.setSearchMessageInputValue,
   toggleSearchMessagePanelVisibility: uiActions.toggleSearchMessagePanelVisibility,
-  setSearchMessagePanelVisibility: uiActions.setSearchMessagePanelVisibility
+  setSearchMessagePanelVisibility: uiActions.setSearchMessagePanelVisibility,
+  setSidebarVisibility: uiActions.setSidebarVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatHeader)

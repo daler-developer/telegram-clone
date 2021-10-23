@@ -1,34 +1,34 @@
-.chat-message {
-  & {
-    background-color: $color-white;
-    display: inline-flex;
-    padding: 8px 8px 4px;
-    border-radius: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+// .chat-message {
+//   & {
+//     background-color: $color-white;
+//     display: inline-flex;
+//     padding: 8px 8px 4px;
+//     border-radius: 10px;
+//     position: relative;
+//     display: flex;
+//     flex-direction: column;
 
-    &--green {
-      background-color: $color-light-green;
-    }
-  }
-  &__author {
-    position: absolute;
-    bottom: 100%;
-    left: 6px;
-    font-weight: 600;
-    font-size: 12px;
-    word-break: keep-all;
-  }
-  &__photo {
-    border-radius: 10px;
-    margin-top: 7px;
-    max-width: 350px;
-    object-fit: fill;
-  }
-  &__date-created {
-    margin-top: 10px;
-    color: $color-grey;
-    font-size: 13px;
-  }
-}
+//     &--green {
+//       background-color: $color-light-green;
+//     }
+//   }
+//   &__author {
+//     position: absolute;
+//     bottom: 100%;
+//     left: 6px;
+//     font-weight: 600;
+//     font-size: 12px;
+//     word-break: keep-all;
+//   }
+//   &__photo {
+//     border-radius: 10px;
+//     margin-top: 7px;
+//     max-width: 350px;
+//     object-fit: fill;
+//   }
+//   &__date-created {
+//     margin-top: 10px;
+//     color: $color-grey;
+//     font-size: 13px;
+//   }
+// }

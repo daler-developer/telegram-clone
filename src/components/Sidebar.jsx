@@ -35,12 +35,17 @@ const Sidebar = (props) => {
     return () => unsubscribe()
   }, [])
 
+  const closeSidebar = () => {
+    props.setSidebarVisibility({ to: false })
+  }
+
   const handleSearchInputFocus = (e) => {
     searchPanelRef.current.classList.add('sidebar__search-panel--active')
   }
 
   const handleAddChatBtnClick = () => {
     props.toggleCreateChatWindowVisibility()
+    closeSidebar()
   }
   
   const handleLogoutBtnClick = () => {
@@ -48,7 +53,7 @@ const Sidebar = (props) => {
   }
 
   const handleShadeClick = () => {
-    props.toggleVisibility()
+    closeSidebar()
   }
 
   return <>
@@ -125,7 +130,8 @@ const mapDispatchToProps = {
   setIsLoading: chatsActions.setIsLoading,
   setSearchChatInputValue: commonActions.setSearchChatInputValue,
   setChats: chatsActions.setChats,
-  toggleVisibility: uiActions.toggleSidebarVisibility
+  toggleVisibility: uiActions.toggleSidebarVisibility,
+  setSidebarVisibility: uiActions.setSidebarVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

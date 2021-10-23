@@ -20,6 +20,9 @@ const uiReducer = createSlice({
     },
     setSearchMessagePanelVisibility(state, { payload }) {
       state.searchMessagePanelVisibility = payload.to
+    },
+    setSidebarVisibility(state, { payload }) {
+      state.sidebarVisibility = payload.to
     }
   }
 })

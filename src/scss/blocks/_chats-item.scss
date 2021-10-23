@@ -7,7 +7,7 @@
     column-gap: 10px;
     border-radius: 5px;
     cursor: pointer;
-    // overflow: hidden;
+    overflow: hidden;
     grid-template-areas:
       'photo name'
       'photo last-message';
@@ -40,5 +40,23 @@
   }
   &__last-message-text {
 
+  }
+}
+
+@include mq('tablet-wide') {
+  .chats-item {
+    & {
+      
+    }
+    &__photo {
+      width: 50px;
+      height: 50px;
+    }
+    &__name {
+      font-size: 20px;
+    }
+    &__last-message {
+      font-size: 15px;
+    }
   }
 }
