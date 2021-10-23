@@ -56,7 +56,7 @@
     border-radius: 50%;
 
     &:hover {
-      background-color: $color-black-01;
+      background-color: $color-black-005;
     }
   }
   &__icon {
@@ -82,8 +82,8 @@
     border-radius: 3px;
 
     &--hidden {
-      transform: scale(0);
-      transform-origin: 100% 0;
+      transform: scaleX(0);
+      transform-origin: 100% 50%;
     }
   }
   &__search-input {

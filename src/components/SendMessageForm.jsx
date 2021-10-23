@@ -40,7 +40,8 @@ const SendMessageForm = (props) => {
       photoURL: fileData,
       author: {
         displayName: props.user.displayName,
-        uid: props.user.uid
+        uid: props.user.uid,
+        photoURL: props.user.photoURL
       },
       createdDate: serverTimestamp(),
       timestamp: new Date().getTime()

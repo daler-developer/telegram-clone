@@ -1,5 +1,6 @@
-import { collection, onSnapshot, orderBy, query } from '@firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, onSnapshot, orderBy, query, updateDoc } from '@firebase/firestore'
 import { db } from 'firebase'
+import usePrevious from 'hooks/usePrevious'
 import { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
@@ -12,6 +13,8 @@ import SendMessageForm from './SendMessageForm'
 
 
 const Chat = (props) => {
+  const previousSelectedChatId = usePrevious(props.selectedChatId)
+
   const chatBodyRef = useRef(null)
 
   useEffect(() => props.setIsLoading({ to: true }), [props.selectedChatId])
@@ -30,7 +33,8 @@ const Chat = (props) => {
           createdDate: { seconds: data.createdDate?.seconds },
           author: {
             displayName: data.author.displayName,
-            uid: data.author.uid
+            uid: data.author.uid,
+            photoURL: data.author.photoURL
           },
           timestamp: data.timestamp
         }
@@ -41,6 +45,17 @@ const Chat = (props) => {
     })
 
     return () => unsubscribe()
+  }, [props.selectedChatId])
+
+  useEffect(async () => {
+    await updateDoc(doc(db, `/chats/${props.selectedChatId}`), {
+      onlineList: arrayUnion(props.user.displayName)
+    })
+    if (previousSelectedChatId) {
+      await updateDoc(doc(db, `/chats/${previousSelectedChatId}`), {
+        onlineList: arrayRemove(props.user.displayName)
+      })
+    }
   }, [props.selectedChatId])
 
   useEffect(() => {
@@ -62,10 +77,8 @@ const Chat = (props) => {
                 photoURL={message.photoURL}
                 createdDate={message.createdDate}
                 author={message.author}
-                isGreen={message.author.uid === props.user.uid ? true : false}
-                alignment={message.author.uid === props.user.uid ? 'right' : 'left'}
+                belongsToCurrentUser={message.author.uid === props.user.uid}
                 timestamp={message.timestamp}
-                highlighted={message.text.includes(props.searchMessageInputValue) ? true : false}
               />
             ))
           }

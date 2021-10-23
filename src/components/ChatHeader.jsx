@@ -9,6 +9,11 @@ import { selectSearchMessagePanelVisibility, uiActions } from 'redux/reducers/ui
 
 const ChatHeader = (props) => {
   const searchMessageInputRef = useRef(null)
+  const handleDocumentClickRef = useRef((e) => {
+    if (!e.target.contains(searchMessageInputRef.current)) {
+      // props.setSearchMessagePanelVisibility({ to: false })
+    }
+  })
 
   const isLastOnlineItem = (index) => {
     return props.selectedChat.onlineList.length === index + 1
@@ -25,7 +30,8 @@ const ChatHeader = (props) => {
   }, [props.searchMessagePanelVisibility])
 
   const handleSearchBtnClick = () => {
-    props.toggleSearchMessagePanelVisibility()
+    // document.addEventListener('click', handleDocumentClickRef.current, { once: true })
+    props.setSearchMessagePanelVisibility({ to: !props.searchMessagePanelVisibility })
   }
 
   const handleDeleteChatBtnClick = () => {
@@ -90,7 +96,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setSearchMessageInputValue: commonActions.setSearchMessageInputValue,
-  toggleSearchMessagePanelVisibility: uiActions.toggleSearchMessagePanelVisibility
+  toggleSearchMessagePanelVisibility: uiActions.toggleSearchMessagePanelVisibility,
+  setSearchMessagePanelVisibility: uiActions.setSearchMessagePanelVisibility
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatHeader)

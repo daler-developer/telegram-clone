@@ -1,17 +1,23 @@
 import pt from 'prop-types'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
+import { selectSearchMessageInputValue } from 'redux/reducers/commonReducer'
 
 
 const MessagesItem = (props) => {
   return (
     <li
       className={`messages-item
-        ${props.alignment === 'left' ? 'messages-item--align-left' : 'messages-item--align-right'}
-        ${props.highlighted && 'messages-item--highlighted'}
+        ${!props.belongsToCurrentUser && 'messages-item--reversed'}
+        ${props.belongsToCurrentUser ? 'messages-item--align-right' : 'messages-item--align-left'}
       `}
     >
-      <div className={`messages-item__message ${props.isGreen && 'messages-item__message--green'}`}>
+      <div
+        className={`messages-item__message
+          ${props.belongsToCurrentUser && 'messages-item__message--green'}
+          ${props.searchMessageInputValue.trim() && props.text.includes(props.searchMessageInputValue) && 'messages-item__message--blue-border'}
+        `}
+      >
         <span className="messages-item__message-author">
           {props.author.displayName}
         </span>
@@ -25,7 +31,7 @@ const MessagesItem = (props) => {
           {new Date(props.timestamp).toDateString()}
         </span>
       </div>
-      <img src={props.user.photoURL} className="messages-item__photo" />
+      <img src={props.author.photoURL} className="messages-item__photo" />
     </li>
   )
 }
@@ -35,14 +41,13 @@ MessagesItem.propTypes = {
   photoURL: pt.string,
   createdDate: pt.object.isRequired,
   author: pt.object.isRequired,
-  isGreen: pt.bool.isRequired,
-  alignment: pt.oneOf(['left', 'right']).isRequired,
-  timestamp: pt.number.isRequired,
-  highlighted: pt.bool.isRequired
+  belongsToCurrentUser: pt.bool.isRequired,
+  timestamp: pt.number.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  user: selectUser(state)
+  user: selectUser(state),
+  searchMessageInputValue: selectSearchMessageInputValue(state)
 })
 
 const mapDispatchToProps = {}

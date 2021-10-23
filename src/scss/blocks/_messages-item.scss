@@ -2,15 +2,15 @@
   & {
     display: flex;
     column-gap: 10px;
+    animation: float .3s ease-in forwards;
+    position: relative;
+    align-items: start;
 
     &--align-left {
       justify-content: start;
     }
     &--align-right {
       justify-content: end;
-    }
-    &--highlighted {
-      // todo
     }
     &--reversed {
       flex-direction: row-reverse;
@@ -20,6 +20,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    user-select: none;
   }
   &__message {
     position: relative;
@@ -28,9 +29,13 @@
     flex-direction: column;
     border-radius: 10px;
     padding: 10px 10px 4px;
+    border: 2px solid transparent;
 
     &--green {
       background-color: $color-light-green;
+    }
+    &--blue-border {
+      border-color: $color-blue;
     }
   }
   &__message-photo {
@@ -48,5 +53,16 @@
     left: 5px;
     font-weight: 600;
     font-size: 13px;
+  }
+}
+
+@keyframes float {
+  from {
+    bottom: -20px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
   }
 }

@@ -2,11 +2,10 @@
   & {
     text-align: center;
     padding: 15px 15px;
-    background-color: $color-white;
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
     min-height: 100vh;
   }
   &__body {
-    box-shadow: 0 0 30px $color-black-02;
     background-color: $color-white;
     padding: 40px 0;
     min-width: 375px;

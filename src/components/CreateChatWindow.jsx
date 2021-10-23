@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { connect } from "react-redux"
 import { selectCreateChatWindowVisibility, uiActions } from "redux/reducers/uiReducer"
 import Shade from "./Shade"
@@ -16,7 +16,15 @@ const CreateChatWindow = (props) => {
   const [selectedPhotoURL, setSelectedPhotoURL] = useState(photo01)
   const [emptyChatNameError, setEmptyChatNameError] = useState(false)
 
+  const chatNameInputRef = useRef(null)
+
   const photos = [photo01, photo02, photo03, photo04]
+
+  useEffect(() => {
+    if (props.visibility) {
+      focusInput()
+    }
+  }, [props.visibility])
 
   const createChat = async () => {
     const chat = {
@@ -27,6 +35,10 @@ const CreateChatWindow = (props) => {
     }
 
     await addDoc(collection(db, 'chats'), chat)
+  }
+
+  const focusInput = () => {
+    chatNameInputRef.current?.focus()
   }
 
   const resetWindow = () => {
@@ -71,6 +83,7 @@ const CreateChatWindow = (props) => {
           value={chatNameInputValue}
           onChange={(e) => setChatNameInputValue(e.target.value)}
           placeholder="Type chat name"
+          ref={chatNameInputRef}
         />
         <ul className="create-chat-window__photos-list">
           {
