@@ -1,10 +1,23 @@
+import { getDownloadURL, ref } from '@firebase/storage'
+import { storage } from 'firebase'
 import pt from 'prop-types'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
 import { selectSearchMessageInputValue } from 'redux/reducers/commonReducer'
 
 
 const MessagesItem = (props) => {
+  const [URL, setURL] = useState(null)
+
+  useEffect(() => {
+    if (props.photoRef) {
+      getDownloadURL(ref(storage, props.photoRef)).then((result) => {
+        setURL(result)
+      }) 
+    }
+  }, [])
+
   return (
     <li
       className={`messages-item
@@ -24,8 +37,8 @@ const MessagesItem = (props) => {
         <p className="messages-item__message-text">
           {props.text}
         </p>
-        {props.photoURL && (
-          <img src={props.photoURL} className="messages-item__message-photo" />
+        {props.photoRef && (
+          <img src={URL} className="messages-item__message-photo" />
         )}
         <span className="messages-item__message-created-date">
           {new Date(props.timestamp).toDateString()}
@@ -39,7 +52,7 @@ const MessagesItem = (props) => {
 MessagesItem.propTypes = {
   text: pt.string.isRequired,
   photoURL: pt.string,
-  createdDate: pt.object.isRequired,
+  photoRef: pt.string,
   author: pt.object.isRequired,
   belongsToCurrentUser: pt.bool.isRequired,
   timestamp: pt.number.isRequired

@@ -1,5 +1,6 @@
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from '@firebase/firestore'
-import { db } from 'firebase'
+import { ref, uploadBytes } from '@firebase/storage'
+import { db, storage } from 'firebase'
 import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { selectUser } from 'redux/reducers/authReducer'
@@ -12,11 +13,10 @@ const SendMessageForm = (props) => {
   const [submitBtnHidden, setSubmitBtnHidden] = useState(true)
   const [fileData, setFileData] = useState(null)
   const [isPhotoPreviewHidden, setIsPhotoPreviewHidden] = useState(true)
+  const [file, setFile] = useState(null)
 
   const fileInputRef = useRef(null)
   const messageInputRef = useRef(null)
-
-  // useEffect(() => messageInputRef.current.focus(), [props.selectedChatId])
 
   useEffect(() => {
     if (messageInputValue.trim()) {
@@ -37,16 +37,21 @@ const SendMessageForm = (props) => {
   const sendMessage = async () => {
     const message = {
       text: messageInputValue,
-      photoURL: fileData,
       author: {
         displayName: props.user.displayName,
         uid: props.user.uid,
         photoURL: props.user.photoURL
       },
       createdDate: serverTimestamp(),
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      photoRef: file ? `/photos/${file.name}` : null
     }
     await addDoc(collection(db, `chats/${props.selectedChatId}/messages`), message)
+  }
+
+  const uploadFile = () => {
+    const photoRef = ref(storage, `/photos/${file.name}`)
+    uploadBytes(photoRef, file)
   }
 
   const updateLastMessage = async () => {
@@ -65,6 +70,7 @@ const SendMessageForm = (props) => {
 
   const resetForm = () => {
     setFileData(null)
+    setFile(null)
     setMessageInputValue('')
     fileInputRef.current.value = null
   }
@@ -89,9 +95,14 @@ const SendMessageForm = (props) => {
     }
   }
 
+  const readFile = () => {
+    setFile(fileInputRef.current?.files[0])
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     sendMessage()
+    if (file) uploadFile()
     updateLastMessage()
     resetForm()
   }
@@ -102,6 +113,7 @@ const SendMessageForm = (props) => {
 
   const handleFileInputChange = (e) => {
     readFileData(e.target)
+    readFile()
   }
 
   const handleDeletePhotoBtnClick = () => {

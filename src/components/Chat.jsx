@@ -29,8 +29,7 @@ const Chat = (props) => {
         const message = {
           id: doc.id,
           text: data.text,
-          photoURL: data.photoURL,
-          createdDate: { seconds: data.createdDate?.seconds },
+          photoRef: data.photoRef,
           author: {
             displayName: data.author.displayName,
             uid: data.author.uid,
@@ -74,8 +73,7 @@ const Chat = (props) => {
               <MessagesItem
                 key={message.id}
                 text={message.text}
-                photoURL={message.photoURL}
-                createdDate={message.createdDate}
+                photoRef={message.photoRef}
                 author={message.author}
                 belongsToCurrentUser={message.author.uid === props.user.uid}
                 timestamp={message.timestamp}
