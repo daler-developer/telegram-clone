@@ -81,13 +81,13 @@ const Sidebar = (props) => {
           <span className="sidebar__search-icon material-icons-outlined">
             search
           </span>
-          {/* <input
+          <input
             className="sidebar__search-input"
             placeholder="Search chat"
             value={props.searchChatInputValue}
             onChange={(e) => props.setSearchChatInputValue({ to: e.target.value })}
             onFocus={handleSearchInputFocus}
-          /> */}
+          />
         </div>
       </div>
       {/* Chats */}

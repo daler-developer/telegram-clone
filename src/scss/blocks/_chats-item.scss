@@ -30,6 +30,7 @@
     grid-area: name;
     font-weight: 600;
     font-size: 22px;
+    white-space: nowrap;
   }
   &__last-message {
     grid-area: last-message;

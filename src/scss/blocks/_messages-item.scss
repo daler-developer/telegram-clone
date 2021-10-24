@@ -30,6 +30,7 @@
     border-radius: 10px;
     padding: 10px 10px 4px;
     border: 2px solid transparent;
+    max-width: 50%;
 
     &--green {
       background-color: $color-light-green;
@@ -39,7 +40,6 @@
     }
   }
   &__message-photo {
-    max-width: 50%;
     background-color: $color-light-grey;
   }
   &__message-created-date {

@@ -62,7 +62,7 @@ const ChatHeader = (props) => {
 
       {/* Left */}
       <div className="chat-header__left">
-        <button className="chat-header__burger-menu-btn" onClick={handleBugerMenuBtnClick}>
+        <button className="chat-header__btn chat-header__burger-menu-btn" onClick={handleBugerMenuBtnClick}>
           <span className="chat-header__icon chat-header__burger-icon material-icons">
             menu
           </span>
@@ -72,7 +72,7 @@ const ChatHeader = (props) => {
           {props.selectedChat.name}
         </span>
         <div className="chat-header__online-panel">
-          <span>Online:</span>
+          <span className="chat-header__online-label">Online:</span>
           <ul className="chat-header__online-list">
             {
               props.selectedChat.onlineList.map((online, i) => (
@@ -86,12 +86,12 @@ const ChatHeader = (props) => {
       </div>
       {/* Right */}
       <div className="chat-header__right">
-        <button className="chat-header__btn" type="button" onClick={handleSearchBtnClick}>
+        <button className="chat-header__btn chat-header__search-btn" type="button" onClick={handleSearchBtnClick}>
           <span className="chat-header__search-icon chat-header__icon material-icons-outlined">
             search
           </span>
         </button>
-        <button className="chat-header__btn" type="button" title="Detete chat" onClick={handleDeleteChatBtnClick}>
+        <button className="chat-header__btn chat-header__delete-btn" type="button" title="Detete chat" onClick={handleDeleteChatBtnClick}>
           <span className="chat-header__delete-icon chat-header__icon material-icons-outlined">
             delete
           </span>

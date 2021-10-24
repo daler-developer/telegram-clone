@@ -70,7 +70,8 @@ h6, .h6 {
 }
 
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 4px;
+  height: 0px;
 }
 
 ::-webkit-scrollbar-track {
@@ -80,8 +81,4 @@ h6, .h6 {
 ::-webkit-scrollbar-thumb {
   background: grey;
   border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  // background: #555;
 }

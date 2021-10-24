@@ -19,13 +19,13 @@
     grid-template-areas:
       'photo name'
       'photo online-list';
+    overflow: hidden;
   }
   &__burger-menu-btn {
     display: none;
     grid-area: burger-menu-btn;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
 
     &:hover {
       background-color: $color-black-005;
@@ -42,17 +42,24 @@
     grid-area: name;
     font-weight: 600;
     font-size: 22px;
+    white-space: nowrap;
   }
   &__online-panel {
     display: flex;
     align-items: center;
     column-gap: 5px;
   }
+  &__online-label {
+
+  }
   &__online-list {
     grid-area: online-list;
     display: flex;
     align-items: center;
     column-gap: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: $color-grey;
   }
   &__online-item {
 
@@ -63,20 +70,22 @@
     column-gap: 20px;
   }
   &__btn {
-    @include center;
-    width: 45px;
-    height: 45px;
     border-radius: 50%;
 
     &:hover {
       background-color: $color-black-005;
     }
   }
+  &__search-btn, &__delete-btn {
+    @include center;
+    width: 45px;
+    height: 45px;
+  }
   &__icon {
     font-size: 30px;
   }
   &__search-icon {
-    color: $color-grey;
+    color: $color-black;
   }
   &__delete-icon {
     color: $color-red;
@@ -94,10 +103,10 @@
     align-items: center;
     border-radius: 3px;
     box-shadow: 0 0 0 3.5px $color-light-blue;
+    opacity: 1;
 
     &--hidden {
-      transform: scaleX(0);
-      // transform-origin: 100% 50%;
+      opacity: 0;
     }
   }
   &__search-input {
@@ -139,12 +148,12 @@
     &__right {
       column-gap: 5px;
     }
-    &__btn {
-      width: 30px;
-      height: 30px;
+    &__search-btn, &__delete-btn {
+      width: 40px;
+      height: 40px;
     }
     &__icon {
-      font-size: 20px;
+      font-size: 24px;
     }
   }
 }
