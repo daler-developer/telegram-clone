@@ -24,8 +24,9 @@
   &__burger-menu-btn {
     display: none;
     grid-area: burger-menu-btn;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+    color: $color-grey;
 
     &:hover {
       background-color: $color-black-005;

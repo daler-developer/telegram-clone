@@ -41,7 +41,7 @@ const MessagesItem = (props) => {
           <img src={URL} className="messages-item__message-photo" />
         )}
         <span className="messages-item__message-created-date">
-          {new Date(props.timestamp).toDateString()}
+          {`${new Date(props.timestamp).getHours()}:${new Date(props.timestamp).getMinutes()}`}
         </span>
       </div>
       <img src={props.author.photoURL} className="messages-item__photo" />
