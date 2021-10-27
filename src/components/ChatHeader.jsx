@@ -41,8 +41,8 @@ const ChatHeader = (props) => {
   }
 
   const handleSearchBtnClick = () => {
-    props.setSearchMessagePanelVisibility({ to: true })
-    addListener()
+    props.setSearchMessagePanelVisibility({ to: !props.searchMessagePanelVisibility })
+    // addListener()
   }
 
   const handleDeleteChatBtnClick = () => {

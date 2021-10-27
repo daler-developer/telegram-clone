@@ -36,6 +36,12 @@ const App = (props) => {
     })
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('error', (e) => {
+      alert('Error')
+    })
+  }, [])
+
   return (
     <div className={'app'}>
       <Switch>

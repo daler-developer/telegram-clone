@@ -7,6 +7,11 @@ import photo01 from 'assets/avatars/01.svg'
 import photo02 from 'assets/avatars/02.svg'
 import photo03 from 'assets/avatars/03.svg'
 import photo04 from 'assets/avatars/04.svg'
+import photo05 from 'assets/avatars/05.svg'
+import photo06 from 'assets/avatars/06.svg'
+import photo07 from 'assets/avatars/07.svg'
+import photo08 from 'assets/avatars/08.svg'
+
 import { addDoc, collection } from "@firebase/firestore"
 import { db } from "firebase"
 import { chatsActions } from "redux/reducers/chatsReducer"
@@ -19,7 +24,7 @@ const CreateChatWindow = (props) => {
 
   const chatNameInputRef = useRef(null)
 
-  const photos = [photo01, photo02, photo03, photo04]
+  const photos = [photo01, photo02, photo03, photo04, photo05, photo06, photo07, photo08]
 
   useEffect(() => {
     if (props.visibility) {
@@ -79,7 +84,7 @@ const CreateChatWindow = (props) => {
 
   return <>
     <div className={`create-chat-window ${!props.visibility && 'create-chat-window--hidden'}`}>
-      <h2 className={'create-chat-window__title h3'}>
+      <h2 className={'create-chat-window__title h4'}>
         Create Chat
       </h2>
       <form className="create-chat-window__form" onSubmit={handleSubmit}>
