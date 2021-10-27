@@ -13,9 +13,20 @@ import Shade from './Shade'
 
 const Sidebar = (props) => {
   const searchPanelRef = useRef(null)
+  const searchInput = useRef(null)
+
+  const [isSearchPanelActive, setIsSearchPanelActive] = useState(false)
 
   useEffect(() => {
     props.setIsLoading({ to: true })
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('click', (e) => {
+      if (!e.target.contains(searchInput.current)) {
+        setIsSearchPanelActive(false)
+      }
+    })
   }, [])
 
   useEffect(() => {
@@ -40,7 +51,7 @@ const Sidebar = (props) => {
   }
 
   const handleSearchInputFocus = (e) => {
-    searchPanelRef.current.classList.add('sidebar__search-panel--active')
+    setIsSearchPanelActive(true)
   }
 
   const handleAddChatBtnClick = () => {
@@ -77,11 +88,12 @@ const Sidebar = (props) => {
       </div>
       {/* Search */}
       <div className="sidebar__search-panel-wrapper">
-        <div className="sidebar__search-panel" ref={searchPanelRef}>
+        <div className={`sidebar__search-panel ${isSearchPanelActive && 'sidebar__search-panel--active'}`} ref={searchPanelRef}>
           <span className="sidebar__search-icon material-icons-outlined">
             search
           </span>
           <input
+            ref={searchInput}
             className="sidebar__search-input"
             placeholder="Search chat"
             value={props.searchChatInputValue}

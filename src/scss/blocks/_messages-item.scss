@@ -62,6 +62,14 @@
   &__message-text {
 
   }
+  &__loader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid $color-grey;
+    border-left-color: transparent;
+    animation: rotate-loader .6s infinite linear;
+    border-radius: 50%;
+  }
 }
 
 @keyframes float {

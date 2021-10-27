@@ -9,12 +9,14 @@ import { selectSearchMessageInputValue } from 'redux/reducers/commonReducer'
 
 const MessagesItem = (props) => {
   const [URL, setURL] = useState(null)
+  const [isPhotoLoading, setIsPhotoLoading] = useState(true)
 
   useEffect(() => {
     if (props.photoRef) {
       getDownloadURL(ref(storage, props.photoRef)).then((result) => {
         setURL(result)
-      }) 
+        setIsPhotoLoading(false)
+      })
     }
   }, [])
 
@@ -37,8 +39,11 @@ const MessagesItem = (props) => {
         <p className="messages-item__message-text">
           {props.text}
         </p>
-        {props.photoRef && (
+        {props.photoRef && !isPhotoLoading && (
           <img src={URL} className="messages-item__message-photo" />
+        )}
+        {props.photoRef && isPhotoLoading && (
+          <div className="messages-item__loader"></div>
         )}
         <span className="messages-item__message-created-date">
           {`${new Date(props.timestamp).getHours()}:${new Date(props.timestamp).getMinutes()}`}

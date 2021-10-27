@@ -9,11 +9,20 @@ import { selectSearchMessagePanelVisibility, uiActions } from 'redux/reducers/ui
 
 const ChatHeader = (props) => {
   const searchMessageInputRef = useRef(null)
-  const handleDocumentClickRef = useRef((e) => {
+  const handlerRef = useRef((e) => {
     if (!e.target.contains(searchMessageInputRef.current)) {
-      // props.setSearchMessagePanelVisibility({ to: false })
+      console.log('test')
+      props.setSearchMessagePanelVisibility({ to: false })
+      removeListener()
     }
   })
+
+  useEffect(() => {
+    if (props.searchMessagePanelVisibility) {
+      searchMessageInputRef.current?.focus()
+    }
+  }, [props.searchMessagePanelVisibility])
+
 
   const isLastOnlineItem = (index) => {
     return props.selectedChat.onlineList.length === index + 1
@@ -23,19 +32,17 @@ const ChatHeader = (props) => {
     await deleteDoc(doc(db, '/chats' , props.selectedChat.id))
   }
 
-  const openSidebar = () => {
-    props.setSidebarVisibility({ to: true })
+  const addListener = () => {
+    document.addEventListener('click', handlerRef.current)
   }
 
-  useEffect(() => {
-    if (props.searchMessagePanelVisibility) {
-      searchMessageInputRef.current?.focus()
-    }
-  }, [props.searchMessagePanelVisibility])
+  const removeListener = () => {
+    document.removeEventListener('click', handlerRef.current)
+  }
 
   const handleSearchBtnClick = () => {
-    // document.addEventListener('click', handleDocumentClickRef.current, { once: true })
-    props.setSearchMessagePanelVisibility({ to: !props.searchMessagePanelVisibility })
+    props.setSearchMessagePanelVisibility({ to: true })
+    addListener()
   }
 
   const handleDeleteChatBtnClick = () => {
@@ -43,7 +50,7 @@ const ChatHeader = (props) => {
   }
 
   const handleBugerMenuBtnClick = () => {
-    openSidebar()
+    props.setSidebarVisibility({ to: true })
   }
 
   return (
