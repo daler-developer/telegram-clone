@@ -4,6 +4,7 @@ Welcome to Telegram Clone, made using React and Firebase!
 
 ## Demo:
 
+![Preview image](https://github.com/daler-developer/telegram-clone-react/blob/main/preview.jpg)
 Link: https://daler-developer.github.io/telegram-clone/
 
 ## Teck Stack:
