@@ -69,7 +69,6 @@
     background-color: $color-white-dark;
     padding: 0 15px;
     border: 2px solid transparent;
-    overflow-y: auto;
 
     &--active {
       border-color: $color-blue;
@@ -82,12 +81,13 @@
   &__search-icon {
     font-size: 26px;
     color: $color-light-grey;
-    flex-shrink: 1;
+    flex-shrink: 0;
   }
   &__search-input {
     margin-left: 10px;
     font-size: 17px;
     align-self: stretch;
+    min-width: 0;
     flex-grow: 1;
   }
   &__chats-list {

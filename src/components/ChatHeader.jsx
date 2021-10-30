@@ -9,13 +9,6 @@ import { selectSearchMessagePanelVisibility, uiActions } from 'redux/reducers/ui
 
 const ChatHeader = (props) => {
   const searchMessageInputRef = useRef(null)
-  const handlerRef = useRef((e) => {
-    if (!e.target.contains(searchMessageInputRef.current)) {
-      console.log('test')
-      props.setSearchMessagePanelVisibility({ to: false })
-      removeListener()
-    }
-  })
 
   useEffect(() => {
     if (props.searchMessagePanelVisibility) {
@@ -32,17 +25,8 @@ const ChatHeader = (props) => {
     await deleteDoc(doc(db, '/chats' , props.selectedChat.id))
   }
 
-  const addListener = () => {
-    document.addEventListener('click', handlerRef.current)
-  }
-
-  const removeListener = () => {
-    document.removeEventListener('click', handlerRef.current)
-  }
-
   const handleSearchBtnClick = () => {
     props.setSearchMessagePanelVisibility({ to: !props.searchMessagePanelVisibility })
-    // addListener()
   }
 
   const handleDeleteChatBtnClick = () => {

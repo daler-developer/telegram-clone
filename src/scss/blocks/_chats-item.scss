@@ -7,7 +7,6 @@
     column-gap: 10px;
     border-radius: 5px;
     cursor: pointer;
-    overflow: hidden;
     grid-template-areas:
       'photo name'
       'photo last-message';
@@ -35,6 +34,7 @@
   &__last-message {
     grid-area: last-message;
     white-space: nowrap;
+    overflow-y: hidden;
   }
   &__last-message-author {
     font-weight: 500;

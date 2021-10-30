@@ -1,5 +1,6 @@
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from '@firebase/firestore'
 import { ref, uploadBytes } from '@firebase/storage'
+import { nanoid } from '@reduxjs/toolkit'
 import { db, storage } from 'firebase'
 import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
@@ -17,6 +18,7 @@ const SendMessageForm = (props) => {
 
   const fileInputRef = useRef(null)
   const messageInputRef = useRef(null)
+  const photoIdRef = useRef(null)
 
   useEffect(() => {
     if (messageInputValue.trim()) {
@@ -34,6 +36,10 @@ const SendMessageForm = (props) => {
     }
   }, [fileData])
 
+  const generatePhotoId = () => {
+    photoIdRef.current = nanoid()
+  }
+
   const sendMessage = async () => {
     const message = {
       text: messageInputValue,
@@ -44,14 +50,14 @@ const SendMessageForm = (props) => {
       },
       createdDate: serverTimestamp(),
       timestamp: new Date().getTime(),
-      photoRef: file ? `/photos/${file.name}` : null
+      photoRef: file ? `/photos/${photoIdRef.current}_${file.name}` : null
     }
     await addDoc(collection(db, `chats/${props.selectedChatId}/messages`), message)
   }
 
-  const uploadFile = () => {
-    const photoRef = ref(storage, `/photos/${file.name}`)
-    uploadBytes(photoRef, file)
+  const uploadFile = async () => {
+    const photoRef = ref(storage, `/photos/${photoIdRef.current}_${file.name}`)
+    await uploadBytes(photoRef, file)
   }
 
   const updateLastMessage = async () => {
@@ -99,10 +105,13 @@ const SendMessageForm = (props) => {
     setFile(fileInputRef.current?.files[0])
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    generatePhotoId()
+    if (file) {
+      await uploadFile()
+    }
     sendMessage()
-    if (file) uploadFile()
     updateLastMessage()
     resetForm()
   }
