@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/telegram-clone/static/css/main.10999395.chunk.css",
+    "main.js": "/telegram-clone/static/js/main.a2e28d06.chunk.js",
+    "main.js.map": "/telegram-clone/static/js/main.a2e28d06.chunk.js.map",
+    "runtime-main.js": "/telegram-clone/static/js/runtime-main.f339f435.js",
+    "runtime-main.js.map": "/telegram-clone/static/js/runtime-main.f339f435.js.map",
+    "static/js/2.12edc804.chunk.js": "/telegram-clone/static/js/2.12edc804.chunk.js",
+    "static/js/2.12edc804.chunk.js.map": "/telegram-clone/static/js/2.12edc804.chunk.js.map",
+    "index.html": "/telegram-clone/index.html",
+    "static/css/main.10999395.chunk.css.map": "/telegram-clone/static/css/main.10999395.chunk.css.map",
+    "static/js/2.12edc804.chunk.js.LICENSE.txt": "/telegram-clone/static/js/2.12edc804.chunk.js.LICENSE.txt",
+    "static/media/01.4f438702.svg": "/telegram-clone/static/media/01.4f438702.svg",
+    "static/media/02.dd463982.svg": "/telegram-clone/static/media/02.dd463982.svg",
+    "static/media/03.3990d193.svg": "/telegram-clone/static/media/03.3990d193.svg",
+    "static/media/04.499762bc.svg": "/telegram-clone/static/media/04.499762bc.svg",
+    "static/media/05.30f23d98.svg": "/telegram-clone/static/media/05.30f23d98.svg",
+    "static/media/06.6615d830.svg": "/telegram-clone/static/media/06.6615d830.svg",
+    "static/media/07.08c6b511.svg": "/telegram-clone/static/media/07.08c6b511.svg",
+    "static/media/08.4f495ff6.svg": "/telegram-clone/static/media/08.4f495ff6.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f339f435.js",
+    "static/js/2.12edc804.chunk.js",
+    "static/css/main.10999395.chunk.css",
+    "static/js/main.a2e28d06.chunk.js"
+  ]
+}
