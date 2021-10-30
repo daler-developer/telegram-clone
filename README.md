@@ -1,4 +1,4 @@
-# Telegram Clone
+# Telegram Clone 
 
 Welcome to Telegram Clone, made using React and Firebase!
 
