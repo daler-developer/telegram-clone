@@ -1,33 +1,45 @@
-# Telegram Clone 
+# Welcome to Image Gallery 👋
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
+[![Twitter: DalerSaidov2003](https://img.shields.io/twitter/follow/DalerSaidov2003.svg?style=social)](https://twitter.com/DalerSaidov2003)
 
-Welcome to Telegram Clone, made using React and Firebase!
+> A telegram clone, where you can create rooms and chat with other people
 
-## Demo:
+### 🏠 [Homepage](https://daler-developer.github.io/image-gallery)
 
-![Preview image](https://github.com/daler-developer/telegram-clone-react/blob/main/preview.jpg)
-Link: https://daler-developer.github.io/telegram-clone/
+### ✨ [Demo](/preview.jpg)
 
-## Teck Stack:
+## Install
 
-- HTML5
-- CSS3
+```sh
+npm install
+```
+
+## Usage
+
+```sh
+npm start
+```
+
+## Run tests
+
+```sh
+npm run test
+```
+
+## Tech Stack
+
+- React/Redux
+- Firebase
 - Sass
-- React (Redux + Redux Toolkit)
-- Firebase (Authentication/Firestore/Storage)
 
-## Features:
+## Author
 
-- Responsibe design
-- Navigation
-- Cool design
-- Sending messages
-- Sending photos
-- Creatinging chats with avatars
-- Seeing users online
-- Google authentication
+👤 **Saidov Daler**
 
-## Other info:
+* Twitter: [@DalerSaidov2003](https://twitter.com/DalerSaidov2003)
+* Github: [@daler-developer](https://github.com/daler-developer)
 
-Total time taken to complete: ~15 hours(Including reading docs)  
-Total bugs fixed: ~50  
-Total brain cells killed: ~1000  
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
