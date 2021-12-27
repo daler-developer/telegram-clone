@@ -4,7 +4,7 @@
 
 > A telegram clone, where you can create rooms and chat with other people
 
-### 🏠 [Homepage](https://daler-developer.github.io/image-gallery)
+### 🏠 [Homepage](https://daler-developer.github.io/telegram-clone)
 
 ### ✨ [Demo](/preview.jpg)
 
