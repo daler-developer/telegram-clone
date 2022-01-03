@@ -1,45 +1,32 @@
-# Welcome to Image Gallery 👋
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
-[![Twitter: DalerSaidov2003](https://img.shields.io/twitter/follow/DalerSaidov2003.svg?style=social)](https://twitter.com/DalerSaidov2003)
+# Telegram Clone
 
-> A telegram clone, where you can create rooms and chat with other people
+Welcome to [Telegram](https://telegram.org/) clone web app 👋
+ 
+![This is an image](/preview.jpg)
 
-### 🏠 [Homepage](https://daler-developer.github.io/telegram-clone)
+# ✨ [Live](https://daler-developer.github.io/telegram-clone/)
 
-### ✨ [Demo](/preview.jpg)
+## Stack
+ - Front-end: [React](https://reactjs.org/) / [Redux](https://redux.js.org/) / [Sass](https://sass-lang.com/)
+ - Back-end: [Firebase](https://firebase.google.com/?authuser=0)
+ - Deployment: [GitHub Pages](https://pages.github.com/)
 
-## Install
 
-```sh
-npm install
-```
+## Getting Started
 
-## Usage
+### Prerequisites
 
-```sh
-npm start
-```
+Please install the following software before starting development:
+  - [Git](https://git-scm.com/downloads)
+  - [Node.js](https://nodejs.org/en/download/)
 
-## Run tests
-
-```sh
-npm run test
-```
-
-## Tech Stack
-
-- React/Redux
-- Firebase
-- Sass
-
-## Author
-
-👤 **Saidov Daler**
-
-* Twitter: [@DalerSaidov2003](https://twitter.com/DalerSaidov2003)
-* Github: [@daler-developer](https://github.com/daler-developer)
-
+### Steps
+  - Clone [repository](https://github.com/daler-developer/todo-list-mern)
+  - Run `npm install` in root folder to install dependencies
+  - Run `npm start` in root folder
+  - Open `https://localhost:3000` in a browser
+  
+   
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
